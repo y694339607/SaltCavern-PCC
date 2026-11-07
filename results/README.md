@@ -15,7 +15,7 @@ Per-sample and summary results backing every table in the manuscript.
 | `repeats_per_sample.csv` | both arms × two data-order repeats (600 rows) | Table 7 |
 | `three_run_endpoint.csv` | cavity-level endpoint of the three runs | Table 8 |
 | `replication_check.csv` | reproduction of the test-side endpoint against the archived table | Table 5 |
-| `placebo_summary.csv` / `placebo_init_per_sample.csv` | three placebo controls | Section 4.5 |
+| `negative_control_summary.csv` / `negative_control_init_per_sample.csv` | three negative controls | Section 4.5 |
 | `init_summary.csv` / `init_repeats_per_sample.csv` | initialization stratum (900 rows) | Section 4.5 |
 | `density_strata_test.csv` / `density_strata_val_repeats.csv` | endpoint stratified by the ID-1024 valid azimuth-cell count | Section 4.4 |
 | `slice_azimuth_counts.csv` | valid azimuth cells per slice (150 000 rows) | Section 4.4 |
@@ -43,7 +43,7 @@ in the recorded frame (`z_m = 0.3048 z` applied to obtain metric units).
 | `repeats_per_sample.csv` | 两个臂 × 两次数据顺序重复（600 行） | 表 7 |
 | `three_run_endpoint.csv` | 三次运行的腔级主终点 | 表 8 |
 | `replication_check.csv` | 测试集主终点与归档表的逐项复现核对 | 表 5 |
-| `placebo_summary.csv` / `placebo_init_per_sample.csv` | 三项安慰剂对照 | §4.5 |
+| `negative_control_summary.csv` / `negative_control_init_per_sample.csv` | 三项阴性对照 | §4.5 |
 | `init_summary.csv` / `init_repeats_per_sample.csv` | 初始化维度（900 行） | §4.5 |
 | `density_strata_test.csv` / `density_strata_val_repeats.csv` | 按 ID-1024 有效方位格数分层的主终点 | §4.4 |
 | `slice_azimuth_counts.csv` | 逐切片有效方位格数（150 000 行） | §4.4 |

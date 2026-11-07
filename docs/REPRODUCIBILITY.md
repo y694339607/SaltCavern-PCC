@@ -76,7 +76,7 @@ Per-sample and summary results are in `results/`; the file-to-table mapping is i
 | Nine grid–operator combinations (Table 6, Figure 7) · 九配置 | parameterised loop in `identity_common_support.py`; inputs in the data release |
 | Masked vs full-region pairing (Table 7 repeats) · 监督配对 | `code/stats/repeats_eval.py`, `repeats_stats.py` |
 | Initialization stratum (§4.5) · 初始化维度 | `code/stats/init_eval.py`, `init_stats.py`, `init_fingerprint.py`; results in `results/init_summary.csv` |
-| Placebo controls (§4.5) · 安慰剂对照 | `code/stats/placebo_init_eval.py`; clouds on request |
+| Negative controls (§4.5) · 阴性对照 | `code/stats/negative_control_eval.py`; clouds on request |
 | Masked vs full-region CD₁ pairing (§4.3) | `code/stats/supervision_arms_cd1.py` |
 | Three-run endpoint (Table 8) · 三次运行主终点 | from the three `common_support_val_*` scripts; results in `results/three_run_endpoint.csv` |
 | Observational-density stratification (§4.4) · 观测密度分层 | results `results/density_strata_test.csv`, `density_strata_val_repeats.csv`; input `results/slice_azimuth_counts.csv` |

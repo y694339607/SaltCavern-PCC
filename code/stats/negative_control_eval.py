@@ -1,4 +1,4 @@
-# placebo_init_eval.py — R4 安慰剂对照 / R5 初始化维度 全支撑评估
+# negative_control_eval.py — negative-control and initialization-stratum evaluation
 # 管线复刻 source_archive/mu/init_eval.py（常量与函数逐行一致，不依赖 ckpt）
 import numpy as np
 import pandas as pd
@@ -93,9 +93,9 @@ def find_pred_dir(tag):
 
 ARMS = [
     dict(pair='HIST',  arm='BM', tag='掩码配置(主运行)',  path=VOL / 'pred_adapointr_masked'),
-    dict(pair='MV',    arm='PL1', tag='对照1-掩码带错位', path=find_pred_dir('pred_MV_PL1')),
-    dict(pair='MV',    arm='PL2', tag='对照2-随机同量剔除', path=find_pred_dir('pred_MV_PL2')),
-    dict(pair='MV',    arm='PL3', tag='对照3-仅预测侧剔除', path=find_pred_dir('pred_MV_PL3')),
+    dict(pair='control', arm='shifted',   tag='control: mask band shifted',        path=find_pred_dir('pred_control_shifted')),
+    dict(pair='control', arm='random',    tag='control: same count removed at random', path=find_pred_dir('pred_control_random')),
+    dict(pair='control', arm='one_sided', tag='control: prediction side only',     path=find_pred_dir('pred_control_one_sided')),
     dict(pair='MU2',   arm='BM', tag='随机初始化-掩码',  path=find_pred_dir('pred_MU2-BM')),
     dict(pair='MU2',   arm='E2', tag='随机初始化-全区域', path=find_pred_dir('pred_MU2-E2')),
 ]

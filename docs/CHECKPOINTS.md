@@ -24,10 +24,10 @@ end-of-budget checkpoint; no end-of-budget weights are released.
 
 ### Not released as weights
 
-- Data-order repeats (Tables 7–8), the initialization stratum and the placebo controls
+- Data-order repeats (Tables 7–8), the initialization stratum and the negative controls
   (Section 4.5) were run, but only their per-sample metrics are released
   (`results/repeats_per_sample.csv`, `results/init_repeats_per_sample.csv`,
-  `results/placebo_init_per_sample.csv`).
+  `results/negative_control_init_per_sample.csv`).
 - The blind-window width ablations (window 30 m and 100 m) and one seed-reproduction run were also
   carried out; no row of the manuscript reports them and their weights are not published.
 
@@ -68,9 +68,9 @@ Re-export: `code/evaluation/export_adapointr_test.py` (test) or
 
 ### 未以权重形式发布
 
-- 顺序重复（表 7–表 8）、初始化维度与安慰剂对照（§4.5）均已运行，但只发布**逐样本指标**：
+- 顺序重复（表 7–表 8）、初始化维度与阴性对照（§4.5）均已运行，但只发布**逐样本指标**：
   `results/repeats_per_sample.csv`、`results/init_repeats_per_sample.csv`、
-  `results/placebo_init_per_sample.csv`。
+  `results/negative_control_init_per_sample.csv`。
 - 盲窗宽度消融（窗宽 30 m 与 100 m）与一次种子复现运行也已执行；论文没有任何一行报告它们，
   其权重不发布。
 

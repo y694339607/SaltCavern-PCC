@@ -16,7 +16,7 @@ This repository provides:
 
 2. **An evaluation protocol that separates geometric error from volume error.** Two reference volumes (an independent simulated radius field V_field, and V_ref obtained by running the complete cloud through the same closure-and-integration pipeline), integrable-slice counting (N_slice), three-way common support (N_common), and input-matched no-completion baselines (ID-1024 / ID-8192).
 
-3. **Quantified robustness and stability checks.** The main endpoint (masked config vs ID-1024 on common support) is positive in all nine grid–operator combinations, in three training runs on the validation split, and under observational-density stratification; three placebo controls all exceed the masked configuration; four of five arbitrary-initialization repeats degrade both supervision configurations geometrically without warning from the internal normalized Chamfer metric.
+3. **Quantified robustness and stability checks.** The main endpoint (masked config vs ID-1024 on common support) is positive in all nine grid–operator combinations, in three training runs on the validation split, and under observational-density stratification; three negative controls all exceed the masked configuration; four of five arbitrary-initialization repeats degrade both supervision configurations geometrically without warning from the internal normalized Chamfer metric.
 
 4. **Reproducible delivery.** Fixed split lists (`data/splits/samples.csv`), the per-sample metrics behind every table (`results/`), and the integration and statistics code in this repository.
 

@@ -44,7 +44,7 @@ for col in ['cd_l1_m','err_field_abs']:
 
 hist_bm = df[(df['pair']=='HIST')&(df['arm']=='BM')].set_index('i').sort_index()
 hist_e2 = df[(df['pair']=='HIST')&(df['arm']=='E2')].set_index('i').sort_index()
-for pl in ['PL1','PL2','PL3']:
+for pl in ['shifted','random','one_sided']:
     arm = df[df['pair']==pl].set_index('i').sort_index()
     for rn, ref in [('BM', hist_bm), ('E2', hist_e2)]:
         d1 = ref['cd_l1_m'].values - arm['cd_l1_m'].values

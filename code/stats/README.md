@@ -25,5 +25,5 @@ trapezoid over slice centres) and the ID-1024 draw
 
 - `repeats_eval.py`, `repeats_stats.py` — masked vs full-region supervision, fixed-initialization repeats (Table 7).
 - `init_eval.py`, `init_stats.py`, `init_fingerprint.py` — initialization stratum (Section 4.5).
-- `placebo_init_eval.py` — placebo controls and initialization summary (Section 4.5).
+- `negative_control_eval.py` — negative controls and initialization summary (Section 4.5).
 - `supervision_arms_cd1.py` — paired CD1 differences of the two supervision arms (Section 4.3).

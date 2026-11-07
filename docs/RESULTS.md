@@ -80,7 +80,7 @@ ID-1024 1.757–2.799 %.
 The corresponding main-run value on the test split is +1.115 pp [+0.882, +1.371].
 · 主运行测试集对应值 +1.115 pp [+0.882, +1.371]。
 
-## Placebo controls (validation, control − masked, V_field) · 安慰剂对照
+## Negative controls (validation, control − masked, V_field) · 阴性对照
 
 | Control · 对照 | Semantics · 语义 | Control V_field (%) | Paired difference [95% CI] · 配对差 | Same-direction · 同向腔 |
 |---|---|---|---|---|
