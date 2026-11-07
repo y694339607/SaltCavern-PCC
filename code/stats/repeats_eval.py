@@ -33,9 +33,9 @@ ARMS = [
 ]
 HIST = [  # 历史参照（可选）：须已有 pred_adapointr_full / pred_adapointr_masked 导出存档
     dict(tag="E2", pair="HIST", arm="E2", init_seed=20260921, order_seed=20260921,
-         ckpt="validate/pilot/ckpt/E2_full_s21_o250e250_pcV2_best.pt", dirname="pred_adapointr_full"),
+         ckpt="validate/pilot/ckpt/full_region_main_e169.pt", dirname="pred_adapointr_full"),
     dict(tag="BM", pair="HIST", arm="BM", init_seed=20260921, order_seed=20260921,
-         ckpt="validate/pilot/ckpt/BM_full_s21_o250e250_pcV2_best.pt", dirname="pred_adapointr_masked"),
+         ckpt="validate/pilot/ckpt/masked_main_e179.pt", dirname="pred_adapointr_masked"),
 ]
 
 ap = argparse.ArgumentParser()

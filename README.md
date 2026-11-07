@@ -67,7 +67,7 @@ SaltCavern-PCC/
 ## Data and model availability
 
 - **Code** is hosted in this repository (MIT license).
-- **Dataset (~200 MB)**, **checkpoints** and **exported predictions** are distributed as GitHub Release assets (tag `v1.0`) and are not tracked in git. Every archive ships with SHA-256 fingerprints; verify with `code/datagen/verify_assets.py`. Split lists and per-sample metrics are small and stay in the repository (`data/splits/`, `results/`).
+- **Dataset (~200 MB)**, **checkpoints** and **exported predictions** are distributed as the assets of the GitHub Release tagged `data-v1.0` and are not tracked in git. Every archive ships with SHA-256 fingerprints; verify with `code/datagen/verify_assets.py`. Split lists and per-sample metrics are small and stay in the repository (`data/splits/`, `results/`).
 - The benchmark is released in the recorded coordinate frame (radial coordinates converted to metres, vertical coordinates retaining foot values), together with the affine map z_m = 0.3048 z along the vertical. Volume-class conclusions are invariant to this map; distance-class conclusions hold only in the post-map frame (see manuscript §3.1).
 - The test split was used once, under a pre-registered embargo protocol, for the main-endpoint confirmation; it is included for full reproducibility together with the split lists.
 

@@ -21,7 +21,7 @@ from paired_data.transforms import denormalize
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'models'))
 from paired_data.dataset import PairedDataset
 
-CKPT = ROOT/'validate/pilot/ckpt/PCN_full_s21_o250e250_pcV2_best.pt'
+CKPT = ROOT/'validate/pilot/ckpt/pcn_main_e250.pt'
 OUT = ROOT/'validate/baseline_dl/pcn'
 DEVICE = 'cuda'
 

@@ -30,12 +30,12 @@ assert len(dfv) == len(ds) == 150
 
 cfg = load_config(str(ROOT / "train/cfg/pc_v2_pilot_pointr.yaml"))["model"]
 model = build_model(cfg, "vendor").cuda()
-ck = torch.load(str(ROOT / "validate/pilot/ckpt/gpointr_s21_best.pt"),
+ck = torch.load(str(ROOT / "validate/pilot/ckpt/pointr_main_e250.pt"),
                 map_location="cuda", weights_only=False)
 sd = ck.get("model", ck.get("model_state", ck)) if isinstance(ck, dict) else ck
 model.load_state_dict(sd)
 model.eval()
-print(f"ckpt=gpointr_s21_best.pt best_epoch={int(ck.get('epoch', -1))}", flush=True)
+print(f"ckpt=pointr_main_e250.pt best_epoch={int(ck.get('epoch', -1))}", flush=True)
 
 pdir = OUT / "pred_pointr"
 pdir.mkdir(parents=True, exist_ok=True)

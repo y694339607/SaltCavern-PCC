@@ -1,4 +1,4 @@
-# export_pointr_validation.py — PoinTr 基线臂（gpointr_s21）预测导出，逻辑镜像 g_export.py
+# export_pointr_validation.py — validation-split export of the PoinTr baseline (pointr_main_e250)
 import sys, numpy as np, torch
 from pathlib import Path
 import os
@@ -31,7 +31,7 @@ def load_model(tag):
     m.eval()
     return m
 
-models = {'GPoinTr': load_model('gpointr_s21_best')}
+models = {'GPoinTr': load_model('pointr_main_e250')}
 out = ROOT/'validate/volume'
 (out/'pred_GPoinTr').mkdir(parents=True, exist_ok=True)
 with torch.no_grad():

@@ -18,8 +18,8 @@ from dataset_pc import PCv2
 from pcn_loss import cd_l1, HAS_EXT
 
 CKPT_DIR = ROOT/'validate/pilot/ckpt'
-BEST = CKPT_DIR/'PCN_full_s21_o250e250_pcV2_best.pt'
-LAST = CKPT_DIR/'PCN_full_s21_o250e250_pcV2_last.pt'
+BEST = CKPT_DIR/'pcn_main_e250.pt'
+LAST = CKPT_DIR/'pcn_main_last.pt'
 LOG = ROOT/'train/pcn_train.log'
 SEED = 20261015
 EPOCHS = 250

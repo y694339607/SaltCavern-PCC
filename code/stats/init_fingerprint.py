@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT / "PoinTr"))
 
 from train_pilot import load_config, build_model  # noqa: E402
 
-HIST_CKPT = ROOT / "validate/pilot/ckpt/E2_full_s21_o250e250_pcV2_best.pt"
+HIST_CKPT = ROOT / "validate/pilot/ckpt/full_region_main_e169.pt"
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--config", required=True)

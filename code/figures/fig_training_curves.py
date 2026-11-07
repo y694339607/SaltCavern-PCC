@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """重绘 fig_training_curves.png（v2）
 变更：图例去除内部代号 BM/E2，改为论文正式名（Ours (masked) / Baseline (unmasked)）。
-数据源：BM_full csv（source_archive/docs/logs/）、
-E2_full csv（figures/logs/）、training_log_masked.log（source_archive/train/）。
+数据源：masked-arm training log csv (source_archive/docs/logs/),
+full-region csv (figures/logs/) and training_log_masked.log (source_archive/train/).
 口径：无平滑；best 点 ep179/169/93；确认臂预置停臂准则（best 停滞 ≥30 epoch）。
 """
 import re
@@ -19,8 +19,8 @@ import matplotlib.pyplot as plt
 BASE = f'{_ARCHIVE}'
 OUT = f'{BASE}/figures/fig_training_curves.png'
 
-bm = pd.read_csv(f'{BASE}/source_archive/docs/logs/BM_full_s21_o250e250_pcV2.csv')
-e2 = pd.read_csv(f'{BASE}/figures/logs/E2_full_s21_o250e250_pcV2.csv')
+bm = pd.read_csv(f'{BASE}/source_archive/docs/logs/training_log_masked.csv')
+e2 = pd.read_csv(f'{BASE}/figures/logs/training_log_full.csv')
 with open(f'{BASE}/source_archive/train/training_log_masked.log') as f:
     lines = f.readlines()
 pat = re.compile(r'\[epoch (\d+)\] train_loss=([\d.]+) val_cd_l2=([\d.]+)')

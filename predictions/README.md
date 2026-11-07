@@ -5,7 +5,7 @@
 ## English
 
 Normalised prediction clouds for the released benchmark. **Binary files are ignored by git**
-(`.gitignore`); they are distributed as the GitHub Release asset `predictions_v1.0.tar.gz`.
+(`.gitignore`); they are distributed as the asset `predictions_v1.0.tar.gz` of the GitHub Release `data-v1.0`.
 
 ```
 predictions/
@@ -72,7 +72,7 @@ python code/evaluation/volume_pipeline.py \
 
 ## 中文
 
-发布用预测点云的规范树。**二进制文件被 git 忽略**（`.gitignore`），随 GitHub Release 资产
+发布用预测点云的规范树。**二进制文件被 git 忽略**（`.gitignore`），随 GitHub Release `data-v1.0` 的资产
 `predictions_v1.0.tar.gz` 发布。
 
 目录结构与上节相同：`test/` 含 7 个臂的预测与 150 件完整真值；`val/` 含 4 个臂与真值；

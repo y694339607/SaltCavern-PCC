@@ -1,4 +1,4 @@
-# export_pcn_test.py —  test 导出：PCN 基线（PCN_full_s21_o250e250_pcV2_best）
+# export_pcn_test.py — test-split export of the PCN baseline (checkpoint pcn_main_e250)
 # 装载与归一化代码段复用 归档 pcn_export.py（val 版）同式链路；
 # Predictions are written to $SCC_ROOT/validate/test_final/pred_pcn/ with per-file checks and a SHA256 list.
 # 用法：cd /data && python validate/test/export_pcn_test.py
@@ -23,7 +23,7 @@ from dataset_pc import PCv2  # noqa: E402
 from paired_data.transforms import denormalize  # noqa: E402
 from paired_data.dataset import PairedDataset  # noqa: E402
 
-CKPT = ROOT / "validate/pilot/ckpt/PCN_full_s21_o250e250_pcV2_best.pt"
+CKPT = ROOT / "validate/pilot/ckpt/pcn_main_e250.pt"
 OUT = ROOT / "validate/test_final"
 DEVICE = "cuda"
 
@@ -39,7 +39,7 @@ model = PCN(16384, 1024, 4).to(DEVICE)
 ck = torch.load(str(CKPT), map_location=DEVICE, weights_only=False)
 model.load_state_dict(ck["model"] if "model" in ck else ck)
 model.eval()
-print(f"ckpt=PCN_full_s21_o250e250_pcV2_best.pt best_epoch={int(ck.get('epoch', -1))}",
+print(f"ckpt=pcn_main_e250.pt best_epoch={int(ck.get('epoch', -1))}",
       flush=True)
 
 pdir = OUT / "pred_pcn"

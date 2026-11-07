@@ -69,7 +69,7 @@ list in the repository (`data/splits/samples.csv`) is identical to
 - `figsrc_*` — figure source data (npy/csv), indexed by `figsrc_manifest.csv`.
 - `predictions/` — normalised prediction tree (`test/`, `val/`, `repeats/`; 17 groups × 150 files,
   478 MB). Binaries are not tracked in git and ship as the Release asset
-  `predictions_v1.0.tar.gz`; see `predictions/README.md` for the layout, the table mapping and the
+  `predictions_v1.0.tar.gz` (Release `data-v1.0`); see `predictions/README.md` for the layout, the table mapping and the
   list of deliberately excluded items.
 - SHA-256 manifest: `SHA256SUMS`; verify with `code/datagen/verify_assets.py`.
 
@@ -131,7 +131,7 @@ data from"。划分清单在仓库内为 `data/splits/samples.csv`，在数据�
 - `gtfield/`：独立仿真半径场（V_field 参考）。
 - `figsrc_*`：论文图件源数据（npy/csv），`figsrc_manifest.csv` 索引。
 - `predictions/`：各方法预测点云的规范树（`test/`、`val/`、`repeats/`，17 组 × 150 件，478 MB），
-  二进制不进 git，随 Release 资产 `predictions_v1.0.tar.gz` 发布；目录约定、各组对应的图表与
+  二进制不进 git，随 Release `data-v1.0` 的资产 `predictions_v1.0.tar.gz` 发布；目录约定、各组对应的图表与
   未收录项说明见 `predictions/README.md`。
 - SHA-256 清单：`SHA256SUMS`；核验用 `code/datagen/verify_assets.py`。
 

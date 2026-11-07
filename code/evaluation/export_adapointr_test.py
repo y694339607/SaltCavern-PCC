@@ -23,8 +23,8 @@ from paired_data.transforms import denormalize  # noqa: E402
 
 OUT = ROOT / "validate/test_final"
 ARMS = {
-    "BM": ROOT / "validate/pilot/ckpt/BM_full_s21_o250e250_pcV2_best.pt",
-    "E2": ROOT / "validate/pilot/ckpt/E2_full_s21_o250e250_pcV2_best.pt",
+    "BM": ROOT / "validate/pilot/ckpt/masked_main_e179.pt",
+    "E2": ROOT / "validate/pilot/ckpt/full_region_main_e169.pt",
 }
 
 ap = argparse.ArgumentParser()

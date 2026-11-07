@@ -81,7 +81,7 @@ for s in ('top', 'right'):
 fig.text(0.5, 0.012,
          'Cylindrical NN interpolation reproduced locally with the archived pipeline including its output jitter (seed 20261015); '
          'Ours (masked) is the eval-only single-sample inference from the fingerprint-verified best checkpoint '
-         '(BM_full_s21_o250e250_pcV2_best.pt, ep 179).\nDisplay subsampling ×2 for 16k panels; '
+         '(masked_main_e179.pt, ep 179).\nDisplay subsampling ×2 for 16k panels; '
          'the wellbore section below z = 6050 m is cropped for display (10.2% of ground-truth points); no other processing.',
          ha='center', fontsize=8)
 fig.tight_layout(rect=[0, 0.05, 1, 0.93])
