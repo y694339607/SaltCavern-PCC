@@ -1,0 +1,32 @@
+# ---- large binaries: distributed via release assets / Zenodo, not in git ----
+*.pt
+*.ckpt
+*.pth
+*.npy
+*.npz
+*.tar
+*.tar.gz
+*.zip
+
+# ---- python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ---- os / editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ---- local experiment output ----
+runs/
+outputs/
+logs/
+
+# ---- allow the small bundled example clouds ----
+!examples/**/*.npy
+!data/splits/*.csv
+

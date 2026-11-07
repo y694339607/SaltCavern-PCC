@@ -1,0 +1,46 @@
+experiment: pc_v2_pilot_b0
+seed: 20260921
+data:
+  root: dataset/pc_v2
+  train_split: train
+  val_split: val
+  input_points: 1024
+  gt_points: 16384
+  downsample_seed: 20260921
+  pilot: { enabled: false, tag: 4, n_cavities: 50, ratio_perturb_control: 4.0 }
+model:
+  name: AdaPoinTr
+  num_query: 512
+  num_points: 16384
+  global_feature_dim: 1024
+  encoder_type: graph
+  decoder_type: fc
+  encoder_config: { embed_dim: 384, depth: 6, num_heads: 6, k: 8, n_group: 2, mlp_ratio: 2.0,
+    block_style_list: ['attn-graph','attn','attn','attn','attn','attn'], combine_style: 'concat' }
+  decoder_config: { embed_dim: 384, depth: 8, num_heads: 6, k: 8, n_group: 2, mlp_ratio: 2.0,
+    self_attn_block_style_list: ['attn-graph','attn','attn','attn','attn','attn','attn','attn'],
+    self_attn_combine_style: 'concat',
+    cross_attn_block_style_list: ['attn-graph','attn','attn','attn','attn','attn','attn','attn'],
+    cross_attn_combine_style: 'concat' }
+train:
+  batch_size: 16
+  num_workers: 0
+  epochs_smoke: 20
+  epochs_pilot: 50
+  epochs_full: 150
+  optimizer: AdamW
+  lr: 1.0e-4
+  weight_decay: 5.0e-4
+  scheduler: cosine
+  amp: true
+  grad_clip_norm: 1.0
+  loss_stage: B0
+validate:
+  split: val
+  metric: CDL2
+  visualize_every: 5
+loss:
+  lambda_known: 0.5
+  lambda_missing: 0.5
+  missing_thresh: 0.02
+  band_mask: true

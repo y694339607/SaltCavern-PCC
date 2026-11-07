@@ -1,0 +1,26 @@
+--- a/train_pilot.py
++++ b/train_pilot.py
+@@ -276,7 +276,10 @@
+                             _bw = float(lc.get("bottom_weight", 0.0))
+                             _bz = lc.get("bottom_zone", [60, 250])
+                             scale_b = batch["scale"].to(device).view(-1, 1)
+-                            pred_coarse_bm, _, _, pred_fine_bm = ret
++                            if len(ret) == 4:
++                                pred_coarse_bm, _, _, pred_fine_bm = ret
++                            else:
++                                pred_coarse_bm, pred_fine_bm = ret
+                             zmin_b = gt[:, :, 2].min(dim=1, keepdim=True).values
+                             w_lo = zmin_b + 2.0 / scale_b
+                             w_hi = zmin_b + 60.0 / scale_b
+@@ -307,7 +310,10 @@
+                         if lc.get("coarse_supervise", False) or lc.get("fine_gt2pred_weighted", False):
+                             from extensions.chamfer_dist import ChamferFunction
+                             from losses.adapt_modules import z_density_weights
+-                            pred_coarse, _, _, pred_fine = ret
++                            if len(ret) == 4:
++                                pred_coarse, _, _, pred_fine = ret
++                            else:
++                                pred_coarse, pred_fine = ret
+                             _zb = int(lc.get("zbins", 60)); _wm = float(lc.get("wmax", 50))
+                             if lc.get("coarse_supervise", False):
+                                 lam_c = float(lc.get("coarse_lambda", 1.0))

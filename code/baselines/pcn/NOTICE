@@ -1,0 +1,14 @@
+Third-party code in this directory
+==================================
+
+`extensions/chamfer_distance/` and `extensions/earth_movers_distance/` contain
+CUDA/C++ sources derived from PCN (Yuan et al., 3DV 2018, MIT License),
+https://github.com/wentaoyuan/pcn.
+
+`models/pcn.py`, `metrics/`, `dataset_pc.py`, `train.py`, `pcn_train.py`,
+`pcn_export.py` and `setup_ext.py` are re-implementations / adaptations written
+for this benchmark, sharing the same public API as the upstream PCN code.
+
+Upstream copyright and license: MIT. A copy of the MIT text is in the repository
+root `LICENSE`. No modification of the upstream CUDA kernels was made beyond
+build-script adaptation.
