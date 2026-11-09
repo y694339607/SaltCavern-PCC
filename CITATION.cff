@@ -3,16 +3,11 @@ message: "If you use this repository, please cite it as below."
 title: "SaltCavern-PCC: A paired simulation benchmark for sonar salt-cavern point cloud completion"
 authors:
   - name: "SaltCavern-PCC authors"
-    # TODO: replace with the author list of the manuscript upon publication
 year: 2026
 type: software
 license: MIT
-url: "https://github.com/TODO/SaltCavern-PCC"
-repository-code: "https://github.com/TODO/SaltCavern-PCC"
-identifiers:
-  - type: doi
-    value: 10.5281/zenodo.TODO
-    description: "Archived dataset and checkpoint release (to be minted at publication)"
+url: "https://github.com/y694339607/SaltCavern-PCC"
+repository-code: "https://github.com/y694339607/SaltCavern-PCC"
 keywords:
   - point cloud completion
   - salt cavern gas storage
@@ -27,8 +22,12 @@ abstract: >-
   error (dual reference volumes, integrable-slice counting, three-way common
   support, input-matched no-completion baselines), and stability checks along
   initialization, data-order, and integration-configuration dimensions.
+identifiers:
+  - type: url
+    value: "https://github.com/y694339607/SaltCavern-PCC/releases/tag/data-v1.0"
+    description: "Data, predictions and checkpoint release"
 preferred-citation:
   type: article
-  status: in-preparation
   title: "A paired simulation benchmark for sonar salt-cavern point cloud completion: structured missingness, decoupled geometry-volume evaluation, and training-stability checks"
   year: 2026
+  status: in-preparation
