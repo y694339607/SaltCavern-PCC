@@ -16,8 +16,7 @@
 | IDW | 1.19±0.32 | 4.260 | 5.618 | 1.27±0.32 | 4.695 | 6.081 | 493.2/494.6 |
 | PoinTr | 1.50±0.41 | 8.853 | 9.852 | 1.61±0.42 | 7.821 | 8.814 | 294.3/300.2 |
 | Periodic spline · 周期样条 | 1.77±2.92 | 198.399* | 202.430* | 1.60±0.59 | 8.668 | 9.836 | 493.2/494.6 |
-| ID-1024 (no completion) | 3.28±4.17 | 2.296 | — | 1.97±0.37 | 1.757 | — | 147.6/157.1 |
-| ID-8192 (no completion) | 2.56±4.28 | 1.503 | — | 1.12±0.23 | 1.197 | — | 247.0/255.5 |
+| ID-1024 (no completion) | 1.87±0.34 | 1.843 | — | 1.97±0.37 | 1.757 | — | 152.3/157.1 |
 
 \* The validation mean of the periodic spline is dominated by extreme failures; medians are
 4.723%/5.969%. · 周期样条验证集均值受极端失效样本主导，中位数 4.723%/5.969%。
@@ -92,7 +91,7 @@ Masked configuration 1.459 %; all three means are positive. · 掩码配置 1.45
 
 ## Initialization stratum (validation) · 初始化维度
 
-| Arm · 臂 | V_field (%) | V_ref (%) | CD₁ (m) |
+| Configuration · 配置 | V_field (%) | V_ref (%) | CD₁ (m) |
 |---|---|---|---|
 | Masked · 掩码 | 6.745 | 7.808 | 2.164 |
 | Full-region · 全区域 | 21.020 | 22.690 | 2.238 |
@@ -112,5 +111,4 @@ V_field is 4.6× worse than the main run (1.459 %).
   zero · 跨零); continuous-gap band +0.191 m [0.074, 0.245]; observed cells +0.154 m [0.125, 0.180]
   (radial quantity, invariant under the vertical map · 径向量，不随垂向缩放变化).
 - Over-estimation share (L2, test) · 高估比例：masked signed error mean +0.231 % [−0.444, +0.936],
-  46 % of samples over-estimate; 28 pp higher than ID-8192 (p = 0.00233) and 16 pp higher than
-  ID-1024 (p = 0.108).
+  46 % of samples over-estimate, 16 pp higher than ID-1024 (p = 0.108).

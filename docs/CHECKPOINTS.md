@@ -18,7 +18,7 @@ A SHA-256 list accompanies the four assets; verify a download with
 
 ### Reading the file names
 
-`<arm>_main_e<epoch>.pt`, where `<epoch>` is the epoch at which the released checkpoint was
+`<method>_main_e<epoch>.pt`, where `<epoch>` is the epoch at which the released checkpoint was
 selected by validation CD₂ during a 250-epoch training budget. The file is therefore **not** the
 end-of-budget checkpoint; no end-of-budget weights are released.
 
@@ -41,8 +41,8 @@ ck = torch.load("masked_main_e179.pt", map_location="cuda", weights_only=False)
 state = ck["model"] if "model" in ck else ck
 ```
 
-Training recipes: `configs/pc_v2_pilot_bm.yaml` (`band_mask: true`) and
-`configs/ms_e2_fixedinit.yaml` (`band_mask: false`). Entry point: `code/models/train_pilot.py`.
+Training recipes: `configs/adapointr_masked.yaml` (`band_mask: true`) and
+`configs/adapointr_full_fixedinit.yaml` (`band_mask: false`). Entry point: `code/models/train_pilot.py`.
 Re-export: `code/evaluation/export_adapointr_test.py` (test) or
 `code/evaluation/export_adapointr_validation.py` (validation).
 
@@ -52,7 +52,7 @@ Re-export: `code/evaluation/export_adapointr_test.py` (test) or
 
 ### 已发布的权重（GitHub Release `data-v1.0`）
 
-| 文件 | 臂 | 被选中检查点的轮次 | 论文中的位置 |
+| 文件 | 方法 | 被选中检查点的轮次 | 论文中的位置 |
 |---|---|---|---|
 | `masked_main_e179.pt` | AdaPoinTr，盲区掩码监督 | 179 | 表 4 `adapointr_masked` 行；点云在 `predictions/*/pred_adapointr_masked/` |
 | `full_region_main_e169.pt` | AdaPoinTr，全区域监督 | 169 | 表 4 `adapointr_full` 行；点云在 `predictions/*/pred_adapointr_full/` |
@@ -63,7 +63,7 @@ Re-export: `code/evaluation/export_adapointr_test.py` (test) or
 
 ### 文件名的读法
 
-`<臂>_main_e<轮次>.pt`。其中 `<轮次>` 是在 250 轮训练预算内、按验证 CD₂ 选出该检查点时所在的轮次，
+`<方法>_main_e<轮次>.pt`。其中 `<轮次>` 是在 250 轮训练预算内、按验证 CD₂ 选出该检查点时所在的轮次，
 因此发布的**不是**训练结束时的权重；训练结束权重未发布。
 
 ### 未以权重形式发布
@@ -84,7 +84,7 @@ ck = torch.load("masked_main_e179.pt", map_location="cuda", weights_only=False)
 state = ck["model"] if "model" in ck else ck
 ```
 
-训练配置：`configs/pc_v2_pilot_bm.yaml`（`band_mask: true`）与 `configs/ms_e2_fixedinit.yaml`
+训练配置：`configs/adapointr_masked.yaml`（`band_mask: true`）与 `configs/adapointr_full_fixedinit.yaml`
 （`band_mask: false`）。入口：`code/models/train_pilot.py`。重新导出：
 `code/evaluation/export_adapointr_test.py`（测试集）或
 `code/evaluation/export_adapointr_validation.py`（验证集）。

@@ -21,7 +21,7 @@ class _DS(torch.utils.data.Dataset):
 
 ds = _DS(PairedDataset(root=f'{_ROOT}/dataset/pc_v2', split='val', input_points=1024,
                          gt_points=16384, downsample_seed=20260921))
-cfg = load_config(str(ROOT/'train/cfg/pc_v2_pilot_pointr.yaml'))['model']
+cfg = load_config(str(ROOT/'train/cfg/pointr.yaml'))['model']
 
 def load_model(tag):
     m = build_model(cfg, 'vendor').cuda()

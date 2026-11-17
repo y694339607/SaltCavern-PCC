@@ -22,7 +22,7 @@ MET.mkdir(parents=True, exist_ok=True)
 ALIAS = {"BM": "adapointr_masked", "E2": "adapointr_full", "PCN": "pcn",
          "PoinTr": "pointr", "B1": "cylnn", "B2": "spline", "B3": "idw"}
 METHODS = [ALIAS.get(m, m) for m in ["BM", "E2", "PCN", "PoinTr", "B1", "B2", "B3"]]
-IDTAGS = ["ID-1024", "ID-8192"]
+IDTAGS = ["ID-1024"]
 SCALE = 0.3048
 RW = 0.61
 Z_LO, Z_HI = 2.0, 60.0
@@ -167,7 +167,7 @@ for i in range(150):
             anom.append(dict(i=i, cav=name, field=f"V_pred_{tag}", V_o=V_o, V_n=V_n,
                              note="volume non-finite"))
         # v27 锚点核对（E2/PCN 无锚点跳过）
-        if tag in ("BM", "REF", "B1", "B2", "B3", "PoinTr", "ID-1024", "ID-8192"):
+        if tag in ("BM", "REF", "B1", "B2", "B3", "PoinTr", "ID-1024"):
             aV = anchor_val(tag, i, "V"); aN = int(anchor_val(tag, i, "N"))
             if np.isfinite(V_o) and abs(V_o - aV) > max(1e-4 * abs(aV), 1.0):
                 n_anchor_v_fail += 1

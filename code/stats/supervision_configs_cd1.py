@@ -18,7 +18,7 @@ RAWZIP = WORK / "raw/val_raw.zip"
 SCALE = 0.3048
 N_BOOT = 10000
 SEED = 20261017
-ARMS = {"F-1": ("pred_MS_P1_BM", "pred_MS_P1_E2"), "F-2": ("pred_MS_P2_BM", "pred_MS_P2_E2")}
+PAIRS = {"F-1": ("pred_MS_P1_BM", "pred_MS_P1_E2"), "F-2": ("pred_MS_P2_BM", "pred_MS_P2_E2")}
 PAPER_ORIG = {"F-1": (1.586, 1.645), "F-2": (1.502, 1.505)}
 
 fails = []
@@ -47,7 +47,7 @@ def cd(P, G):
     return 0.5 * (mm(P, G) + mm(G, P))
 
 rows = []
-for tag, (da, db) in ARMS.items():
+for tag, (da, db) in PAIRS.items():
     for i in range(150):
         gt = np.load(REC / "gt" / f"{i:03d}.npy").astype(np.float64)
         A = np.load(ROOT / "validate/volume" / da / f"{i:03d}.npy").astype(np.float64)
@@ -57,10 +57,10 @@ for tag, (da, db) in ARMS.items():
                          cd_A_new=cd(A * [1, 1, SCALE], gt * [1, 1, SCALE]),
                          cd_B_new=cd(B * [1, 1, SCALE], gt * [1, 1, SCALE])))
 df = pd.DataFrame(rows)
-df.to_csv(MET / "f_arms_cd1_逐样本.csv", index=False, encoding="utf-8-sig")
+df.to_csv(MET / "f_supervision_cd1_逐样本.csv", index=False, encoding="utf-8-sig")
 
 out = []
-for tag in ARMS:
+for tag in PAIRS:
     d = df[df.arm == tag]
     a_o, b_o = PAPER_ORIG[tag]
     check(abs(d["cd_A_orig"].mean() - a_o) <= 0.005, f"{tag} BM 原坐标均值 {d['cd_A_orig'].mean():.4f} vs 论文 {a_o}")
@@ -75,7 +75,7 @@ for tag in ARMS:
         out.append(dict(arm=tag, state=col, A_mean=d[f"cd_A_{col}"].mean(), B_mean=d[f"cd_B_{col}"].mean(),
                         diff=da.mean(), ci_lo=lo, ci_hi=hi, p=w.pvalue, n_boot=N_BOOT, seed=SEED))
         print(out[-1], flush=True)
-pd.DataFrame(out).to_csv(MET / "f_arms_cd1_配对.csv", index=False, encoding="utf-8-sig")
+pd.DataFrame(out).to_csv(MET / "f_supervision_cd1_配对.csv", index=False, encoding="utf-8-sig")
 print("\n==== 汇总 ====")
 print(f"FAIL 数：{len(fails)}")
 for x in fails: print("  -", x)

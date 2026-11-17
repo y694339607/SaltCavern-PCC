@@ -28,7 +28,7 @@ dfv = pd.read_csv(ROOT / "dataset/pc_v2/samples.csv", encoding="utf-8-sig")
 dfv = dfv[dfv["split"] == "test"].reset_index(drop=True)
 assert len(dfv) == len(ds) == 150
 
-cfg = load_config(str(ROOT / "train/cfg/pc_v2_pilot_pointr.yaml"))["model"]
+cfg = load_config(str(ROOT / "train/cfg/pointr.yaml"))["model"]
 model = build_model(cfg, "vendor").cuda()
 ck = torch.load(str(ROOT / "validate/pilot/ckpt/pointr_main_e250.pt"),
                 map_location="cuda", weights_only=False)

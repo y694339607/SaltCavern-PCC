@@ -12,7 +12,7 @@ from train_pilot import load_config, build_model
 from paired_data.dataset import PairedDataset
 from paired_data.transforms import denormalize
 
-cfg = load_config(str(str(Path(__file__).resolve().parents[2] / 'configs' / 'pc_v2_pilot_bm.yaml')))
+cfg = load_config(str(str(Path(__file__).resolve().parents[2] / 'configs' / 'adapointr_masked.yaml')))
 device = torch.device("cuda")
 model = build_model(cfg["model"], "vendor").to(device)
 import argparse as _ap

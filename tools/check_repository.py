@@ -2,7 +2,7 @@
 """Repository self-check: names referenced in code and docs must exist.
 
 Checks
-  1. every arm directory used to build `pred_<arm>` exists under predictions/
+  1. every prediction directory used to build `pred_<method>` exists under predictions/
   2. every script that builds `pred_<m>` normalises `m` through an ALIAS map
   3. configuration files referenced anywhere exist in configs/
   4. scripts named in markdown exist in code/
@@ -18,7 +18,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PRED = os.path.join(ROOT, 'predictions')
-ARMS = {'adapointr_masked', 'adapointr_full', 'cylnn', 'spline', 'idw', 'pcn', 'pointr'}
+METHODS = {'adapointr_masked', 'adapointr_full', 'cylnn', 'spline', 'idw', 'pcn', 'pointr'}
 LEGACY = {'BM', 'E2', 'PCN', 'PoinTr', 'B1', 'B2', 'B3'}
 
 issues = []
@@ -39,9 +39,9 @@ for f in glob.glob(os.path.join(ROOT, 'code', '**', '*.py'), recursive=True):
         toks = set(re.findall(r'"([^"]+)"', m.group(1)))
         if not toks <= LEGACY:
             issues.append('%s: unexpected METHODS tokens %s' % (os.path.relpath(f, ROOT), sorted(toks)))
-        unknown = {a for a in ARMS if not os.path.isdir(os.path.join(PRED, 'test', 'pred_' + a))}
+        unknown = {a for a in METHODS if not os.path.isdir(os.path.join(PRED, 'test', 'pred_' + a))}
         if unknown:
-            issues.append('arm directories missing under predictions/test: %s' % sorted(unknown))
+            issues.append('prediction directories missing under predictions/test: %s' % sorted(unknown))
 
 # 3
 cfgs = set(os.listdir(os.path.join(ROOT, 'configs')))
@@ -68,7 +68,7 @@ for f in glob.glob(os.path.join(ROOT, 'code', '**', '*.py'), recursive=True):
     except SyntaxError as e:
         bad.append('%s:%s' % (os.path.relpath(f, ROOT), e.lineno))
 
-print('arm directories: %s' % sorted(present))
+print('prediction directories: %s' % sorted(present))
 if bad:
     print('syntax errors: %s' % bad)
 for i in sorted(set(issues)):

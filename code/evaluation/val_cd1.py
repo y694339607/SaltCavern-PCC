@@ -1,7 +1,7 @@
 # val_cd1.py — P1 验证集 CD1 物理米制重算（适配自 test_cd1.py，固定实现）
 # 固定口径：torch float64 分块精确最近邻，半和；z_new = 0.3048*z_old 同步作用于预测/真值/观测。
 # 锚点：val BM 前三样本 main_cd（recompute_BM_validation.csv）；
-#       七方法 orig 均值 = 表 3 验证列；ID-1024/ID-8192 orig 均值 = 表 3（5.042 / 3.771）。
+#       七方法 orig 均值 = 表 3 验证列；ID-1024 orig 均值 = 表 3（3.6787，2026-11-14 观测修订后）。
 # ID-1024 按固定链 Philox(SeedSequence(20260921,[num,level,2])).permutation(8192)[:1024] 抽取。
 import sys
 from pathlib import Path
@@ -32,7 +32,7 @@ T3_VAL_MEAN = {"B1": 1.509, "BM": 1.399, "E2": 1.459, "PCN": 1.932,
 # 验证侧重标定 CD1 均值锚点（v34 表 5 重标定口径；用户核定 ，tol 0.01）
 T3_VAL_NEW_MEAN = {"B1": 0.898, "BM": 0.896, "E2": 0.946, "PCN": 1.518,
                    "B3": 1.185, "PoinTr": 1.502, "B2": 1.769}
-T3_VAL_ID = {"ID-1024": 5.042, "ID-8192": 3.771}
+T3_VAL_ID = {"ID-1024": 3.6787}
 VAL_BM_MAINCD = {0: 1.76163, 1: 1.63431, 2: 1.62878}
 MASTER_SEED = 20260921
 
@@ -74,7 +74,7 @@ for m in METHODS:
     print("METHOD_DONE", m, flush=True)
 
 # ID 基线（不补全：观测 vs 真值）
-for tag in ["ID-8192", "ID-1024"]:
+for tag in ["ID-1024"]:
     for i in range(150):
         gt = np.load(REC / "gt" / f"{i:03d}.npy").astype(np.float64)
         obs = np.load(REC / "obs" / f"{dfv.loc[i,'name']}_L{int(dfv.loc[i,'level'])}.npy")
@@ -95,7 +95,7 @@ out.to_csv(MET / "val_CD1_逐样本坐标敏感性.csv", index=False, encoding="
 print("saved val_CD1_逐样本坐标敏感性.csv rows=", len(out), flush=True)
 
 methods7 = out[out["method"].isin(METHODS)]
-idrows = out[out["method"].isin(["ID-1024", "ID-8192"])]
+idrows = out[out["method"].isin(["ID-1024"])]
 
 # 锚点核查
 for i in range(3):
@@ -105,7 +105,7 @@ for m in METHODS:
     mean_o = float(methods7[methods7.method == m]["cd_orig"].mean())
     tol = 3e-3 if m == "PCN" else 1e-3
     check(abs(mean_o - T3_VAL_MEAN[m]) <= tol, f"val {m} cd_orig 均值 {mean_o:.4f} vs 表3 {T3_VAL_MEAN[m]:.3f}")
-for tag in ["ID-1024", "ID-8192"]:
+for tag in ["ID-1024"]:
     mean_o = float(idrows[idrows.method == tag]["cd_orig"].mean())
     check(abs(mean_o - T3_VAL_ID[tag]) <= 1e-3, f"val {tag} cd_orig 均值 {mean_o:.4f} vs 表3 {T3_VAL_ID[tag]:.3f}")
 

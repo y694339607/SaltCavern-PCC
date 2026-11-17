@@ -81,12 +81,12 @@ def main():
     ap.add_argument("--pred_root", required=True, help="内含 pred_<M>/<i:03d>.npy")
     ap.add_argument("--gt_dir", required=True, help="真值 npy 目录（dataset 链）")
     ap.add_argument("--field_dir", required=True, help="gt_field npy 目录")
-    ap.add_argument("--methods", required=True, help="逗号分隔，不得含 ID-1024/ID-8192")
+    ap.add_argument("--methods", required=True, help="逗号分隔，不得含 ID-1024")
     ap.add_argument("--outdir", required=True)
     ap.add_argument("--check_table", default=None, help="可选：原坐标复算表路径，逐样本核对 V_pred")
     a = ap.parse_args()
 
-    # accept either the academic arm names used by the released prediction tree
+    # accept either the released prediction-tree names
     # or the legacy short tokens
     ALIAS = {"BM": "adapointr_masked", "E2": "adapointr_full", "PCN": "pcn",
              "PoinTr": "pointr", "B1": "cylnn", "B2": "spline", "B3": "idw"}
@@ -94,7 +94,7 @@ def main():
     assert all(m in ("adapointr_masked", "adapointr_full", "pcn", "pointr",
                      "cylnn", "spline", "idw")
                for m in METHODS), METHODS
-    assert not any(m.startswith("ID-") for m in METHODS), "ID-1024/ID-8192 为不补全基线，禁止混入"
+    assert not any(m.startswith("ID-") for m in METHODS), "ID-1024 为不补全基线，禁止混入"
 
     code_sha = hashlib.sha256(open(__file__, "rb").read()).hexdigest()
     print("ENV python=%s numpy=%s pandas=%s" % (sys.version.split()[0], np.__version__, pd.__version__), flush=True)

@@ -11,7 +11,7 @@ patch -p1 < third_party/pointr_compat.patch   # applies the two unpack points to
 ```
 
 The adaptation is already incorporated in `code/models/train_pilot.py`
-(the version used for the PoinTr arm and the re-runs); a full recursive diff
+(the version used for the PoinTr entry and the re-runs); a full recursive diff
 against the official PoinTr tree showed no library-code differences, i.e. no
 patch to the PoinTr library itself is required.
 

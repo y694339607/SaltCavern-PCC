@@ -36,9 +36,9 @@ for p in pairs_mu:
 m, l, h = boot_pooled(D_CD); rows.append(dict(scope='pooled_CD', dCD_mean=m, dCD_lo=l, dCD_hi=h))
 m, l, h = boot_pooled(D_EF); rows.append(dict(scope='pooled_V', dV_mean=m, dV_lo=l, dV_hi=h))
 
-mu_arms = df[df['pair'].isin(pairs_mu)]
+mu_runs = df[df['pair'].isin(pairs_mu)]
 for col in ['cd_l1_m','err_field_abs']:
-    groups = [g[col].values for _, g in mu_arms.groupby(['pair','arm'])]
+    groups = [g[col].values for _, g in mu_runs.groupby(['pair','arm'])]
     W, pv = stats.levene(*groups, center='median')
     rows.append(dict(scope=f'BF_{col}', W=W, p=pv))
 

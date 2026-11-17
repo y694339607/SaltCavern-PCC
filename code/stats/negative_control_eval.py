@@ -84,14 +84,14 @@ for i in range(150):
                    V_ref=V_ref, V_field=V_field)
 print('meta ok', flush=True)
 
-# ---- 臂定义 ----
+# ---- 方法定义 ----
 def find_pred_dir(tag):
     for cand in [WORK / tag, WORK / tag / tag]:
         if (cand / '000.npy').exists():
             return cand
     raise FileNotFoundError(tag)
 
-ARMS = [
+SPECS = [
     dict(pair='HIST',  arm='BM', tag='掩码配置(主运行)',  path=VOL / 'pred_adapointr_masked'),
     dict(pair='control', arm='shifted',   tag='control: mask band shifted',        path=find_pred_dir('pred_control_shifted')),
     dict(pair='control', arm='random',    tag='control: same count removed at random', path=find_pred_dir('pred_control_random')),
@@ -101,7 +101,7 @@ ARMS = [
 ]
 
 rows = []
-for spec in ARMS:
+for spec in SPECS:
     for i in range(150):
         m = meta[i]
         pred = np.load(spec['path'] / f'{i:03d}.npy').astype(np.float64)

@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 FIG = ROOT / _SUPP / "figures"
 MEDIA = ROOT / "70_paper_draft/work_v24/unpacked/word/media"
 TEST_LONG = ROOT / "source_archive/test_long_table.csv"
-IDENTITY = FIG / "identity_input_matched/identity8192_identity1024_掩码配置_逐样本.csv"
+IDENTITY = FIG / "identity_input_matched/identity1024_掩码配置_逐样本.csv"
 
 # 图 7：七种方法加两种 identity 对照；误差列统一换算为百分数。
 test = pd.read_csv(TEST_LONG)
@@ -26,8 +26,8 @@ method_map = {
     "E2": "AdaPoinTr standard",
     "BM": "AdaPoinTr masked",
 }
-order = list(method_map) + ["identity1024", "identity8192"]
-labels = [method_map[m] for m in method_map] + ["Identity (1024)", "Identity (8192)"]
+order = list(method_map) + ["identity1024"]
+labels = [method_map[m] for m in method_map] + ["Identity (1024)"]
 records = []
 for method in order:
     for level in [0, 1, 2]:
@@ -35,10 +35,6 @@ for method in order:
             rows = identity[identity["level"] == level]
             cd = rows["cd1024_l1_m"].mean()
             vf = rows["err1024_abs"].mean() * 100.0
-        elif method == "identity8192":
-            rows = identity[identity["level"] == level]
-            cd = rows["cd8192_l1_m"].mean()
-            vf = rows["err8192_abs"].mean() * 100.0
         else:
             rows = test[(test["method"] == method) & (test["level"] == level)]
             cd = rows["cd_l1_m"].mean()
@@ -47,7 +43,7 @@ for method in order:
             raise RuntimeError(f"分层样本数异常：{method}, L{level}, n={len(rows)}")
         records.append({"method": method, "level": level, "cd": cd, "vfield": vf})
 plot_data = pd.DataFrame(records)
-plot_data.to_csv(FIG / "图7_测试集覆盖度分层含两种identity.csv", index=False)
+plot_data.to_csv(FIG / "图7_测试集覆盖度分层含identity.csv", index=False)
 
 colors = ["#294f68", "#4b908c", "#d2a043"]
 x = np.arange(len(order), dtype=float)
@@ -78,11 +74,11 @@ fig.legend(handles, leg_labels, loc="upper center", ncol=3, frameon=False, fonts
 fig.text(
     0.5, 0.012,
     "Held-out test set, n = 150; 50 samples per coverage level. Panel (b) uses a logarithmic scale. "
-    "Identity (1024) uses the model-matched subset; Identity (8192) uses all stored observations.",
+    "Identity (1024) uses the model-matched subset.",
     ha="center", fontsize=10.5, color="#666666",
 )
 fig.tight_layout(rect=[0.02, 0.065, 0.99, 0.94], w_pad=3.0)
-out7 = FIG / "图7_覆盖度分层结果_含两种identity.png"
+out7 = FIG / "图7_覆盖度分层结果_含identity.png"
 fig.savefig(out7, dpi=200, facecolor="white")
 plt.close(fig)
 shutil.copyfile(out7, MEDIA / "0f352de20995d8f63ba2293e6373a2be35cecdc2.png")

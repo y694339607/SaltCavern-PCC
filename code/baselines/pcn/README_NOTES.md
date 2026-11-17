@@ -13,13 +13,13 @@ protocol; remaining differences are customary community-port choices.
 1. `models/pcn.py`: `folding_seed` changed to `register_buffer` (the original hard-coded
    `.cuda()`, which excludes it from `state_dict` and `.to(device)`).
 2. Added `dataset_pc.py`: adapter to the shared paired-dataset class (same data chain,
-   same splits, same normalization as the AdaPoinTr arms).
+   same splits, same normalization as the AdaPoinTr configurations).
 3. Added `pcn_loss.py`: unified Chamfer loss — uses the compiled `extensions/chamfer_distance`
    extension when available, falls back to per-sample chunked `cdist`.
 4. Added `pcn_train.py`: 250 epochs, seed 20261015; removes tensorboardX/visualization/open3d
    dependencies.
 5. Added `pcn_export.py`: exports predictions (denormalized) and an L1-CD table.
-6. Training protocol aligned with the AdaPoinTr arms where applicable (250 epochs, same
+6. Training protocol aligned with the AdaPoinTr configurations where applicable (250 epochs, same
    seed); optimizer settings (lr, StepLR, batch size, alpha ramp) keep the community
    protocol and are described as such in the manuscript.
 

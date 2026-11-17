@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """重绘 fig_training_curves.png（v2）
 变更：图例去除内部代号 BM/E2，改为论文正式名（Ours (masked) / Baseline (unmasked)）。
-数据源：masked-arm training log csv (source_archive/docs/logs/),
+数据源：masked-configuration training log csv (source_archive/docs/logs/),
 full-region csv (figures/logs/) and training_log_masked.log (source_archive/train/).
-口径：无平滑；best 点 ep179/169/93；确认臂预置停臂准则（best 停滞 ≥30 epoch）。
+口径：无平滑；best 点 ep179/169/93；确认运行预置停止准则（best 停滞 ≥30 epoch）。
 """
 import re
 import numpy as np
@@ -34,7 +34,7 @@ fig.suptitle('Training curves of the three paper-track runs (seed 20260921; '
              '250-epoch budget unless stopped early)', fontsize=13, y=0.99)
 
 series = [(bm, C['bm'], 'Ours (masked)'), (e2, C['e2'], 'Baseline (unmasked)'),
-          (gs, C['gs'], 'Confirmatory arm (seed 20260921)')]
+          (gs, C['gs'], 'Confirmatory run (seed 20260921)')]
 best_eps = [179, 169, 93]
 
 ax = axes[0]
@@ -46,7 +46,7 @@ ax.set_yscale('log')
 ax.set_xlabel('Epoch')
 ax.set_title('Validation CD (L2, normalised)', fontsize=11)
 ax.legend(frameon=False, fontsize=9.5, loc='upper right')
-ax.annotate('confirmatory arm stopped at ep 107\n(best plateau ≥ 30 epochs; criterion pre-set)',
+ax.annotate('confirmatory run stopped at ep 107\n(best plateau ≥ 30 epochs; criterion pre-set)',
             xy=(107, gs.loc[gs.epoch == 107, 'val_cd_l2'].iloc[0]),
             xytext=(130, 8e-5), fontsize=8.5, color=C['gs'],
             arrowprops=dict(arrowstyle='-', color='k', lw=0.8))
@@ -67,7 +67,7 @@ for ax in axes:
 
 fig.text(0.5, -0.04,
          'Note: stars mark best-checkpoint epochs (179 / 169 / 93). Validation CD is the L2 Chamfer distance in normalised units\n'
-         '(identical training protocol and data order; confirmatory arm differs only in weight initialisation). No smoothing applied.',
+         '(identical training protocol and data order; confirmatory run differs only in weight initialisation). No smoothing applied.',
          ha='center', fontsize=8.5)
 fig.tight_layout(rect=[0, 0.02, 1, 0.95])
 fig.savefig(OUT, bbox_inches='tight')

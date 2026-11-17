@@ -33,9 +33,9 @@ for pair in ["P1", "P2"]:
 for pair in [f"MU{i}" for i in range(1, 6)]:
     for arm in ["BM", "E2"]:
         row = mu_summary[(mu_summary["pair"] == pair) & (mu_summary["arm"] == arm)].iloc[0]
-        rows.append({"pair": pair, "arm": arm, "cd_l1_m": row["cd_l1_m"], "err_field_abs": row["err_field_abs"], "n": int(row["n"]), "repeat_type": "varied_initialization_and_data_order", "status": "normal" if pair == "MU2" else "both_arms_geometric_collapse"})
+        rows.append({"pair": pair, "arm": arm, "cd_l1_m": row["cd_l1_m"], "err_field_abs": row["err_field_abs"], "n": int(row["n"]), "repeat_type": "varied_initialization_and_data_order", "status": "normal" if pair == "MU2" else "both_configurations_geometric_collapse"})
 repeats = pd.DataFrame(rows)
-repeats.to_csv(OUT / "图11_重复实验臂级汇总.csv", index=False, float_format="%.12g")
+repeats.to_csv(OUT / "图11_重复实验汇总.csv", index=False, float_format="%.12g")
 
 teal, rust, gray = "#367C85", "#B26E5D", "#68767C"
 pairs = ["P1", "P2", "MU1", "MU2", "MU3", "MU4", "MU5"]
@@ -75,7 +75,7 @@ for row, metric, title, ylabel in [
     else:
         ax.set_ylim(0, 21)
 
-fig.text(0.5, 0.015, "Sensitivity configurations share the same test samples. P1/P2 vary data order only; MU1–MU5 vary initialization and data order. Shaded MU pairs show geometric collapse in both arms.", ha="center", fontsize=8.7, color=gray)
+fig.text(0.5, 0.015, "Sensitivity configurations share the same test samples. P1/P2 vary data order only; MU1–MU5 vary initialization and data order. Shaded MU pairs show geometric collapse in both configurations.", ha="center", fontsize=8.7, color=gray)
 fig.tight_layout(rect=(0, 0.045, 1, 1))
 fig.savefig(OUT / "图11_数值敏感性与重复实验.png", dpi=300, bbox_inches="tight", facecolor="white")
 plt.close(fig)

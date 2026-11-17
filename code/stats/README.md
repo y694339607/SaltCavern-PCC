@@ -10,9 +10,9 @@ reported in the manuscript; a single parameterised entry point is planned.
 
 | Script | Split | Prediction set |
 |---|---|---|
-| `common_support_test.py` | test | main run, masked arm |
+| `common_support_test.py` | test | main run, masked configuration |
 | `common_support_test_altlayout.py` | test | same, with the v2 path layout |
-| `common_support_val_main.py` | val | main run, masked arm |
+| `common_support_val_main.py` | val | main run, masked configuration |
 | `common_support_val_order1.py` | val | data-order repeat 1 |
 | `common_support_val_order2.py` | val | data-order repeat 2 |
 
@@ -26,4 +26,4 @@ trapezoid over slice centres) and the ID-1024 draw
 - `repeats_eval.py`, `repeats_stats.py` — masked vs full-region supervision, fixed-initialization repeats (Table 7).
 - `init_eval.py`, `init_stats.py`, `init_fingerprint.py` — initialization stratum (Section 4.5).
 - `negative_control_eval.py` — negative controls and initialization summary (Section 4.5).
-- `supervision_arms_cd1.py` — paired CD1 differences of the two supervision arms (Section 4.3).
+- `supervision_configs_cd1.py` — paired CD1 differences of the two supervision configurations (Section 4.3).

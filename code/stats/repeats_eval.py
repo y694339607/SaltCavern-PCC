@@ -1,4 +1,4 @@
-# Evaluate the two supervision arms of the paired-repeat experiment.
+# Evaluate the two supervision configurations of the paired-repeat experiment.
 
 import argparse
 import sys
@@ -21,7 +21,7 @@ N_SLICES = 500
 N_THETA = 72
 DTH = 2 * np.pi / N_THETA
 
-ARMS = [
+SPECS = [
     dict(tag="MS_P1_BM", pair="P1", arm="BM", init_seed=20260921, order_seed=20261101,
          ckpt="validate/pilot/ckpt/MS_P1_BM_i20260921_o20261101_best.pt"),
     dict(tag="MS_P1_E2", pair="P1", arm="E2", init_seed=20260921, order_seed=20261101,
@@ -109,7 +109,7 @@ def cd_l1_m(P, G):
     return 0.5 * (mean_min(P, G) + mean_min(G, P))
 
 
-# 每样本的 gt 几何量与 V_ref、V_field（两臂共用，只算一次）
+# 每样本的 gt 几何量与 V_ref、V_field（两种配置共用，只算一次）
 meta = {}
 for i in range(150):
     gt = np.load(VOL / "gt" / f"{i:03d}.npy").astype(np.float64)
@@ -125,18 +125,18 @@ for i in range(150):
     V_field = float(np.pi * np.mean(gf2 ** 2, axis=1).sum() * H / 200)
     meta[i] = dict(gt=gt, xc=xc, yc=yc, zmin=zmin, H=H, wb=wb, V_ref=V_ref, V_field=V_field)
 
-arms = list(ARMS)
+specs = list(SPECS)
 if a.with_historical:
     for h in HIST:
         if (VOL / h["dirname"]).exists():
             h = dict(h)
             h["tag"] = "HIST_" + h["tag"]
-            arms.append(h)
+            specs.append(h)
         else:
             print("HIST_SKIP 缺少导出目录:", h["dirname"], flush=True)
 
 rows = []
-for spec in arms:
+for spec in specs:
     ck = torch.load(str(ROOT / spec["ckpt"]), map_location="cpu", weights_only=False)
     best_epoch = int(ck.get("epoch", -1))
     pdir = VOL / (spec.get("dirname") or f"pred_{spec['tag']}")

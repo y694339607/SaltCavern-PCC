@@ -30,14 +30,14 @@ released with the data (see `docs/DATASET.md`). · LHS 采样在构建阶段执�
 
 ## 二、Training · 训练 (manuscript §3.5, Figure 5 left)
 
-| Arm · 臂 | Configuration · 配置 | Entry point · 入口 |
+| Method · 方法 | Configuration · 配置 | Entry point · 入口 |
 |---|---|---|
-| Masked supervision (`adapointr_masked`, ep179) · 掩码配置 | `configs/pc_v2_pilot_bm.yaml` | `code/models/train_pilot.py` |
-| Full-region supervision (`adapointr_full`, ep169) · 全区域配置 | `configs/ms_e2_fixedinit.yaml` (`band_mask: false`); see `configs/cfg_e2_from_ckpt.yaml` for warm-start | `code/models/train_pilot.py` |
-| PoinTr arm · PoinTr 臂 | `configs/pc_v2_pilot_pointr.yaml` | `code/models/train_pilot.py` (includes the PoinTr compat unpack) |
+| Masked supervision (`adapointr_masked`, ep179) · 掩码配置 | `configs/adapointr_masked.yaml` | `code/models/train_pilot.py` |
+| Full-region supervision (`adapointr_full`, ep169) · 全区域配置 | `configs/adapointr_full_fixedinit.yaml` (`band_mask: false`); see `configs/adapointr_full_from_ckpt.yaml` for warm-start | `code/models/train_pilot.py` |
+| PoinTr | `configs/pointr.yaml` | `code/models/train_pilot.py` (includes the PoinTr compat unpack) |
 | PCN | argparse, no YAML | `code/baselines/pcn/train.py` (self-contained re-implementation, Chamfer/EMD CUDA extensions) |
-| Data-order repeats · 顺序重复 | `configs/ms_bm_fixedinit.yaml`, `configs/ms_e2_fixedinit.yaml` | `code/models/train_pilot.py` |
-| Blind-window ablations w30/w100 · 窗口臂 | `configs/pc_v2_pilot_bm_w30.yaml`, `configs/pc_v2_pilot_bm_w100.yaml` | same entry; not reported in the manuscript (论文未报告) |
+| Data-order repeats · 顺序重复 | `configs/adapointr_masked_fixedinit.yaml`, `configs/adapointr_full_fixedinit.yaml` | `code/models/train_pilot.py` |
+| Blind-window ablations w30/w100 · 窗口消融 | `configs/blindwindow_w30.yaml`, `configs/blindwindow_w100.yaml` | same entry; not reported in the manuscript (论文未报告) |
 
 Own components · 自有组件: `code/models/paired_data/` (paired dataset and transforms),
 `code/models/losses/adapt_modules.py` (masked two-sided reconstruction term),
@@ -49,8 +49,8 @@ Own components · 自有组件: `code/models/paired_data/` (paired dataset and t
 | Object · 对象 | Script · 脚本 |
 |---|---|
 | Rule-based baselines (`cylnn` / `spline` / `idw`) · 规则化基线 | `code/baselines/baseline_recon.py` (completion export), `code/baselines/baseline_volume.py` (volume) |
-| Deep-model export · 深度模型导出 | `code/evaluation/export_adapointr_test.py` (both arms), `export_pointr_test.py`, `export_pcn_test.py`, `export_pointr_validation.py`, `export_adapointr_validation.py` |
-| No-completion baselines ID-1024 / ID-8192 · 不补全基线 | `code/baselines/identity_sampling.py` (Philox spawn `[cavity, level, 2]`, sampling without replacement), `identity_common_support.py` (common-support integration), `identity_pair_stats.py` (paired statistics) |
+| Deep-model export · 深度模型导出 | `code/evaluation/export_adapointr_test.py` (both configurations), `export_pointr_test.py`, `export_pcn_test.py`, `export_pointr_validation.py`, `export_adapointr_validation.py` |
+| No-completion baseline ID-1024 · 不补全基线 | `code/baselines/identity_sampling.py` (Philox spawn `[cavity, level, 2]`, sampling without replacement), `identity_common_support.py` (common-support integration), `identity_pair_stats.py` (paired statistics) |
 
 ## 四、Evaluation metrics · 评价指标 (manuscript §3.6–§3.7)
 
@@ -77,7 +77,7 @@ Per-sample and summary results are in `results/`; the file-to-table mapping is i
 | Masked vs full-region pairing (Table 7 repeats) · 监督配对 | `code/stats/repeats_eval.py`, `repeats_stats.py` |
 | Initialization stratum (§4.5) · 初始化维度 | `code/stats/init_eval.py`, `init_stats.py`, `init_fingerprint.py`; results in `results/init_summary.csv` |
 | Negative controls (§4.5) · 阴性对照 | `code/stats/negative_control_eval.py`; clouds on request |
-| Masked vs full-region CD₁ pairing (§4.3) | `code/stats/supervision_arms_cd1.py` |
+| Masked vs full-region CD₁ pairing (§4.3) | `code/stats/supervision_configs_cd1.py` |
 | Three-run endpoint (Table 8) · 三次运行主终点 | from the three `common_support_val_*` scripts; results in `results/three_run_endpoint.csv` |
 | Observational-density stratification (§4.4) · 观测密度分层 | results `results/density_strata_test.csv`, `density_strata_val_repeats.csv`; input `results/slice_azimuth_counts.csv` |
 

@@ -12,7 +12,6 @@ Reported quantities (manuscript Section 3.7):
   V_field   volume from the independent radius field
   V_ref     volume from the complete cloud through the same closure pipeline
   N_slice   number of integrable slices
-  ID-8192   volume error of directly integrating all stored observations
   ID-1024   volume error of integrating the frozen 1024-point subsample
 
 Usage:
@@ -94,8 +93,8 @@ def main():
     gf = np.load(os.path.join(root, 'gt_field', '%s.npy' % CAV)).astype(np.float64)
     gf2 = np.where(gf > 0, gf, 0.0)
 
-    print('%-5s %-11s %-11s %-6s %-6s %-11s %-11s %-11s' % (
-        'tier', 'V_field(m3)', 'V_ref(m3)', 'N_ref', 'N_id', 'E_8192(%)', 'E_1024(%)', 'E_1024_vs_ref(%)'))
+    print('%-5s %-11s %-11s %-6s %-6s %-11s %-11s' % (
+        'tier', 'V_field(m3)', 'V_ref(m3)', 'N_ref', 'N_id', 'E_1024(%)', 'E_1024_vs_ref(%)'))
     for lv in LEVELS:
         gt = np.load(os.path.join(root, 'complete', '%s_L%d.npy' % (CAV, lv))).astype(np.float64)
         obs = np.load(os.path.join(root, 'partial', '%s_L%d.npy' % (CAV, lv))).astype(np.float64)
@@ -106,15 +105,13 @@ def main():
 
         v_field = float(np.pi * np.mean(gf2 ** 2, axis=1).sum() * H / 200)
         v_ref, n_ref = volume(radial_areas(np.vstack([gt, wb]), xc, yc, zmin, H), zmin, H)
-        v8192, _ = volume(radial_areas(np.vstack([obs, wb]), xc, yc, zmin, H), zmin, H)
         sub = id1024(obs, NUM, lv)
         v1024, n_id = volume(radial_areas(np.vstack([sub, wb]), xc, yc, zmin, H), zmin, H)
 
-        e8192 = 100 * abs(v8192 - v_field) / v_field
         e1024 = 100 * abs(v1024 - v_field) / v_field
         e1024r = 100 * abs(v1024 - v_ref) / v_ref
-        print('L%-4d %-11.0f %-11.0f %-6d %-6d %-11.4f %-11.4f %-11.4f'
-              % (lv, v_field, v_ref, n_ref, n_id, e8192, e1024, e1024r))
+        print('L%-4d %-11.0f %-11.0f %-6d %-6d %-11.4f %-11.4f'
+              % (lv, v_field, v_ref, n_ref, n_id, e1024, e1024r))
 
 
 if __name__ == '__main__':

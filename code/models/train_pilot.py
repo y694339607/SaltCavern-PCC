@@ -127,7 +127,7 @@ def save_ckpt(path, model, optimizer, epoch, val_cd, cfg_dict):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", default=str(Path(__file__).resolve().parents[2] / 'configs' / 'pc_v2_pilot_bm.yaml'))
+    parser.add_argument("--config", default=str(Path(__file__).resolve().parents[2] / 'configs' / 'adapointr_masked.yaml'))
     parser.add_argument("--mode", choices=["smoke", "pilot", "full"], default="smoke")
     parser.add_argument("--model_source", choices=["stub", "vendor"], default="stub")
     parser.add_argument("--loss_backend", choices=["dummy", "chamfer"], default="dummy")

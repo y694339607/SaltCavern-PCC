@@ -22,7 +22,7 @@ from paired_data.dataset import PairedDataset  # noqa: E402
 from paired_data.transforms import denormalize  # noqa: E402
 
 OUT = ROOT / "validate/test_final"
-ARMS = {
+CHECKPOINTS = {
     "BM": ROOT / "validate/pilot/ckpt/masked_main_e179.pt",
     "E2": ROOT / "validate/pilot/ckpt/full_region_main_e169.pt",
 }
@@ -31,9 +31,9 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--tag", required=True, choices=["BM", "E2"])
 a = ap.parse_args()
 tag = a.tag
-ckpt = ARMS[tag]
+ckpt = CHECKPOINTS[tag]
 
-cfg = load_config(str(ROOT / "train/cfg/ms_bm_fixedinit.yaml"))
+cfg = load_config(str(ROOT / "train/cfg/adapointr_masked_fixedinit.yaml"))
 device = torch.device("cuda")
 model = build_model(cfg["model"], "vendor").to(device)
 ck = torch.load(str(ckpt), map_location=device, weights_only=False)

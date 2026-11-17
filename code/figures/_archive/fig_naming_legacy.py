@@ -202,7 +202,7 @@ for row, metric, title, ylabel in [
 fig.text(
     0.5, 0.015,
     "Sensitivity configurations share the same test samples. Fixed-initialization repeats vary data order only; "
-    "arbitrary-initialization repeats vary initialization and data order. Shaded arbitrary-initialization repeats show geometric collapse in both arms.",
+    "arbitrary-initialization repeats vary initialization and data order. Shaded arbitrary-initialization repeats show geometric collapse in both configurations.",
     ha="center", fontsize=8.5, color=gray,
 )
 fig.tight_layout(rect=(0, 0.05, 1, 1))

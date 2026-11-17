@@ -31,7 +31,7 @@ ap.add_argument("--with-historical", action="store_true")
 ap.add_argument("--out", required=True)
 a = ap.parse_args()
 
-ARMS = []
+SPECS = []
 for s in a.arm:
     f = s.split(";")
     assert len(f) in (6, 7), f"bad --arm: {s}"
@@ -39,7 +39,7 @@ for s in a.arm:
              ckpt=f[5])
     if len(f) == 7:
         d["dirname"] = f[6]
-    ARMS.append(d)
+    SPECS.append(d)
 
 dfv = pd.read_csv(ROOT / "dataset/pc_v2/samples.csv", encoding="utf-8-sig")
 dfv = dfv[dfv["split"] == "val"].reset_index(drop=True)
@@ -114,18 +114,18 @@ for i in range(150):
     V_field = float(np.pi * np.mean(gf2 ** 2, axis=1).sum() * H / 200)
     meta[i] = dict(gt=gt, xc=xc, yc=yc, zmin=zmin, H=H, wb=wb, V_ref=V_ref, V_field=V_field)
 
-arms = list(ARMS)
+specs = list(SPECS)
 if a.with_historical:
     for h in HIST:
         if (VOL / h["dirname"]).exists():
             h = dict(h)
             h["tag"] = "HIST_" + h["tag"]
-            arms.append(h)
+            specs.append(h)
         else:
             print("HIST_SKIP 缺少导出目录:", h["dirname"], flush=True)
 
 rows = []
-for spec in arms:
+for spec in specs:
     ck = torch.load(str(ROOT / spec["ckpt"]), map_location="cpu", weights_only=False)
     best_epoch = int(ck.get("epoch", -1))
     pdir = VOL / (spec.get("dirname") or f"pred_{spec['tag']}")

@@ -149,11 +149,6 @@ def recompute_1024(split, previous, index_arrays):
                 cav=r.cav,
                 level=int(r.level),
                 V_field=V_field,
-                V_id8192=float(r.V_id),
-                err8192_abs=float(r.err_field_abs),
-                err8192_signed=float(r.err_field_signed),
-                n8192_slices=int(r.n_slices),
-                cd8192_l1_m=float(r.cd_l1_m),
                 V_id1024=V_id1024,
                 err1024_abs=abs(V_id1024 - V_field) / V_field,
                 err1024_signed=(V_id1024 - V_field) / V_field,
@@ -193,8 +188,6 @@ def boot_ci(values, rng):
 def paired_bootstrap(data):
     specs = [
         ("identity1024_minus_BM", "err1024_abs", "BM_err_abs"),
-        ("identity8192_minus_BM", "err8192_abs", "BM_err_abs"),
-        ("identity8192_minus_identity1024", "err8192_abs", "err1024_abs"),
     ]
     rows = []
     for split in ["validation", "test", "pooled_descriptive"]:
@@ -226,7 +219,6 @@ def paired_bootstrap(data):
 
 def signed_summary(data):
     methods = [
-        ("identity@8192", "err8192_signed"),
         ("identity@1024", "err1024_signed"),
         ("AdaPoinTr masked", "BM_err_signed"),
     ]
@@ -258,7 +250,6 @@ def signed_summary(data):
 
 def geometry_summary(data):
     methods = [
-        ("identity@8192", "cd8192_l1_m", "8192 stored observations versus 16384 complete points"),
         ("identity@1024", "cd1024_l1_m", "model-matched 1024-point subset versus 16384 complete points"),
         ("AdaPoinTr masked", "BM_cd_l1_m", "16384 predicted points versus 16384 complete points"),
     ]
@@ -289,10 +280,10 @@ def main():
     paired = paired_bootstrap(data)
     signed = signed_summary(data)
     geometry = geometry_summary(data)
-    data.to_csv(OUT / "identity8192_identity1024_掩码配置_逐样本.csv", index=False)
+    data.to_csv(OUT / "identity1024_掩码配置_逐样本.csv", index=False)
     paired.to_csv(OUT / "输入匹配与点数影响_腔体聚类配对bootstrap.csv", index=False)
-    signed.to_csv(OUT / "三种配置_有符号误差分层汇总.csv", index=False)
-    geometry.to_csv(OUT / "三种配置_几何基线分层汇总.csv", index=False)
+    signed.to_csv(OUT / "两种配置_有符号误差分层汇总.csv", index=False)
+    geometry.to_csv(OUT / "两种配置_几何基线分层汇总.csv", index=False)
     index_path = OUT / "identity@1024_模型输入同源索引.npz"
     np.savez_compressed(index_path, **index_arrays)
     checks = {
@@ -320,10 +311,10 @@ def main():
         "outputs_sha256": {},
     }
     for name in [
-        "identity8192_identity1024_掩码配置_逐样本.csv",
+        "identity1024_掩码配置_逐样本.csv",
         "输入匹配与点数影响_腔体聚类配对bootstrap.csv",
-        "三种配置_有符号误差分层汇总.csv",
-        "三种配置_几何基线分层汇总.csv",
+        "两种配置_有符号误差分层汇总.csv",
+        "两种配置_几何基线分层汇总.csv",
         "identity@1024_模型输入同源索引.npz",
     ]:
         checks["outputs_sha256"][name] = sha256(OUT / name)

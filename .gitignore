@@ -25,6 +25,7 @@ Thumbs.db
 runs/
 outputs/
 logs/
+source_archive/
 
 # ---- allow the small bundled example clouds ----
 !examples/**/*.npy

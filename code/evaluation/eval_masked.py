@@ -56,11 +56,17 @@ def cd_hd(a, b):
 
 meta = pd.read_csv(B/'baseline_meta.csv').set_index('i')
 ve = pd.read_csv(ROOT/'validate/pilot/volume_error.csv')
-arms = {'BM': V/'pred_adapointr_masked', 'E2': V/'pred_adapointr_full', 'GPtrV': V/'pred_GPtrV',
-        'GBMw30': V/'pred_GBMw30', 'GBMw100': V/'pred_GBMw100',
+# BM / E2 are the repository aliases of pred_adapointr_masked / pred_adapointr_full.
+# GPtrV, GBMw30 and GBMw100 point clouds are release-side assets: they are large, so the
+# directories are absent from a fresh clone by design. Do not remove these entries.
+methods = {'BM': V/'pred_adapointr_masked',
+        'E2': V/'pred_adapointr_full',
+        'GPtrV': V/'pred_GPtrV',
+        'GBMw30': V/'pred_GBMw30',
+        'GBMw100': V/'pred_GBMw100',
         'PCN': ROOT/'validate/baseline_dl/pcn/pred'}
 rows = []
-for tag, pth in arms.items():
+for tag, pth in methods.items():
     cds, hds, errs = [], [], []
     for i in range(150):
         gt = np.load(V/f'gt/{i:03d}.npy').astype(np.float64)

@@ -159,7 +159,7 @@ def main():
     assert abs(m_id - CONTROL_ID) < 0.15, m_id
     # [local] 归档 n_slice 控制表不在本地，BM 对表断言跳过；最终以输出与归档逐样本比对裁决
 
-    df.to_csv(MET / "test_ID1024_BM_common_per_sample.csv", index=False, encoding="utf-8-sig")
+    df.to_csv(MET / "test_id1024_masked_common_per_sample.csv", index=False, encoding="utf-8-sig")
     s = pd.DataFrame([dict(
         split="test", pair="ID-1024 vs BM", n=150,
         N_common_mean=df["N_common"].mean(), N_common_min=int(df["N_common"].min()),
@@ -168,10 +168,10 @@ def main():
         paired_diff_median_pp=df["paired_diff_pp"].median(),
         n_nan=int(df["E_id1024_pct"].isna().sum() + df["E_bm_pct"].isna().sum()),
         n_anomaly=len(anom))])
-    s.to_csv(MET / "test_ID1024_BM_common_summary.csv", index=False, encoding="utf-8-sig")
+    s.to_csv(MET / "test_id1024_masked_common_summary.csv", index=False, encoding="utf-8-sig")
     print(s.round(4).to_string(index=False), flush=True)
     if anom:
-        pd.DataFrame(anom).to_csv(MET / "test_ID1024_BM_common_anomaly.csv", index=False, encoding="utf-8-sig")
+        pd.DataFrame(anom).to_csv(MET / "test_id1024_masked_common_anomaly.csv", index=False, encoding="utf-8-sig")
     print("ID_COMMON_DONE anomalies=", len(anom), flush=True)
 
 
