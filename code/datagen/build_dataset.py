@@ -10,7 +10,7 @@ code/training/ and code/evaluation/). It documents the on-disk format:
     data/pc_v2/splits/<split>.txt                cavity names, one per line
 
 Usage:
-    python code/supplemental/build_dataset.py --root data/pc_v2 --split val
+    python code/datagen/build_dataset.py --root data/pc_v2 --split val
 """
 import argparse
 from pathlib import Path

@@ -62,20 +62,35 @@ list in the repository (`data/splits/samples.csv`) is identical to
 
 ### Files in the release
 
-- `samples.csv` — sample list (cavity, tier, split, retention).
-- `splits/{train,val,test}.txt` — fixed split lists.
-- `partial/`, `complete/` — incomplete and complete clouds in the released frame.
-- `gtfield/` — independent simulated radius field (the `V_field` reference).
-- `figsrc_*` — figure source data (npy/csv), indexed by `figsrc_manifest.csv`.
-- `predictions/` — normalised prediction tree (`test/`, `val/`, `repeats/`; 17 groups × 150 files,
-  478 MB). Binaries are not tracked in git and ship as the Release asset
-  `predictions_v1.0.tar.gz` (Release `data-v1.0`); see `predictions/README.md` for the layout, the table mapping and the
-  list of deliberately excluded items.
-- SHA-256 manifest: `SHA256SUMS`; verify with `code/datagen/verify_assets.py`.
+```
+pc_v2/
+├── samples.csv                  1500 rows, utf-8-sig
+├── splits/{train,val,test}.txt   400 / 50 / 50 cavity names
+├── train/{partial,complete,gt_field}/
+├── val/{partial,complete,gt_field}/
+└── test/{partial,complete,gt_field}/
+```
+
+| Path | Format | Shape | Columns / layout |
+|---|---|---|---|
+| `*/partial/cav_NNN_Lk.npy` | float32 | (8192, 3) | `x, y, z`; x and y in metres, z in recorded vertical units (×0.3048 for metres) |
+| `*/complete/cav_NNN_Lk.npy` | float32 | (16384, 3) | same frame as `partial/` |
+| `*/gt_field/cav_NNN.npy` | float32 | (201, 360) | radius field in metres; rows from the cavity floor upward (201 layers), 360 columns at 1° azimuth |
+| `samples.csv` | CSV | 1500 × 11 | `name, num, group, split, level, combo, coverage, spacing_m, p_loss, shadow_limited, seed`; `spacing_m` is a layer spacing in recorded units (×0.3048 for metres), `coverage` the source-grid retention |
+| `splits/{train,val,test}.txt` | text | 400 / 50 / 50 | one cavity name per line |
+
+`train/`, `val/` and `test/` hold 1200, 150 and 150 samples; the three tiers of one cavity always
+sit in the same split. Sansmic TOML configurations and source radius tables are build-time inputs on
+the generating side and are not part of this release.
+
+Prediction clouds are a separate Release asset, `predictions_v1.0.tar.gz`; layout and naming are in
+`predictions/README.md`. Checksums: `SHA256SUMS_data-v1.0.txt` for the release assets and
+`predictions/SHA256SUMS.txt` for the cloud tree.
 
 ### Licence and citation
 
-Dataset: CC BY 4.0. Citation information in `CITATION.cff` and the root README.
+Data, exported predictions and the four released checkpoints: CC BY 4.0. Code: MIT. Citation
+information in `CITATION.cff` and the root README; see also `LICENSES.md`.
 
 ---
 
@@ -125,16 +140,30 @@ data from"。划分清单在仓库内为 `data/splits/samples.csv`，在数据�
 
 ### 随包文件
 
-- `samples.csv`：样本清单（腔号、档位、划分、观测保留率）。
-- `splits/{train,val,test}.txt`：固定划分清单。
-- `partial/`、`complete/`：残缺与完整点云（发布坐标）。
-- `gtfield/`：独立仿真半径场（V_field 参考）。
-- `figsrc_*`：论文图件源数据（npy/csv），`figsrc_manifest.csv` 索引。
-- `predictions/`：各方法预测点云的规范树（`test/`、`val/`、`repeats/`，17 组 × 150 件，478 MB），
-  二进制不进 git，随 Release `data-v1.0` 的资产 `predictions_v1.0.tar.gz` 发布；目录约定、各组对应的图表与
-  未收录项说明见 `predictions/README.md`。
-- SHA-256 清单：`SHA256SUMS`；核验用 `code/datagen/verify_assets.py`。
+```
+pc_v2/
+├── samples.csv                  1500 行，utf-8-sig
+├── splits/{train,val,test}.txt   400 / 50 / 50 个腔名
+├── train/{partial,complete,gt_field}/
+├── val/{partial,complete,gt_field}/
+└── test/{partial,complete,gt_field}/
+```
+
+| 路径 | 格式 | 形状 | 列 / 布局 |
+|---|---|---|---|
+| `*/partial/cav_NNN_Lk.npy` | float32 | (8192, 3) | `x, y, z`；x、y 为米，z 为记录垂向单位（×0.3048 得米） |
+| `*/complete/cav_NNN_Lk.npy` | float32 | (16384, 3) | 与 `partial/` 同一坐标系 |
+| `*/gt_field/cav_NNN.npy` | float32 | (201, 360) | 半径场（米）；行自腔底向上共 201 层，360 列为 1° 方位 |
+| `samples.csv` | CSV | 1500 × 11 | `name, num, group, split, level, combo, coverage, spacing_m, p_loss, shadow_limited, seed`；`spacing_m` 为记录单位下的层间距（×0.3048 得米），`coverage` 为源网格保留率 |
+| `splits/{train,val,test}.txt` | 文本 | 400 / 50 / 50 | 每行一个腔名 |
+
+train/val/test 分别包含 1200/150/150 个样本；同一腔体的三个档位始终落在同一划分内。Sansmic 的 TOML
+配置与源半径表是生成侧的构建输入，不属于本次发布。
+
+预测点云为另一项 Release 资产 `predictions_v1.0.tar.gz`，目录与命名见 `predictions/README.md`。
+校验值：发布资产用 `SHA256SUMS_data-v1.0.txt`，预测树用 `predictions/SHA256SUMS.txt`。
 
 ### 许可与引用
 
-数据集：CC BY 4.0。引用信息见根目录 `CITATION.cff` 与 README。
+数据、导出预测与四个发布检查点：CC BY 4.0。代码：MIT。引用信息见根目录 `CITATION.cff` 与 README，
+另见 `LICENSES.md`。

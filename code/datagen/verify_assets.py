@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Verify SHA-256 fingerprints of released assets against the manifest.
+"""Verify SHA-256 fingerprints of released assets against a TSV manifest.
 
-Supplemental utility authored for the public repository release.
+Manifest format: a header row, then one asset per line with four tab-separated
+columns: file, role, size_bytes, sha256.
 Usage:
-    python code/supplemental/verify_assets.py --manifest docs/checkpoint_sha256.tsv --dir checkpoints/
+    python code/datagen/verify_assets.py --manifest <manifest.tsv> --dir <asset_dir>
 """
 import argparse
 import hashlib

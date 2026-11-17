@@ -1,11 +1,11 @@
 cff-version: 1.2.0
 message: "If you use this repository, please cite it as below."
-title: "SaltCavern-PCC: A paired simulation benchmark for sonar salt-cavern point cloud completion"
+title: "SaltCavern-PCC: paired benchmark and decoupled geometry–volume evaluation protocol for sonar-based salt-cavern point-cloud completion"
 authors:
   - name: "SaltCavern-PCC authors"
 year: 2026
 type: software
-license: MIT
+license: "MIT AND CC-BY-4.0"
 url: "https://github.com/y694339607/SaltCavern-PCC"
 repository-code: "https://github.com/y694339607/SaltCavern-PCC"
 keywords:
@@ -28,6 +28,6 @@ identifiers:
     description: "Data, predictions and checkpoint release"
 preferred-citation:
   type: article
-  title: "A paired simulation benchmark for sonar salt-cavern point cloud completion: structured missingness, decoupled geometry-volume evaluation, and training-stability checks"
+  title: "Paired benchmark and decoupled geometry–volume evaluation protocol for sonar-based salt-cavern point-cloud completion"
   year: 2026
   status: in-preparation

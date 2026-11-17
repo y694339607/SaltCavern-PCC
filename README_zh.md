@@ -48,15 +48,31 @@ SaltCavern-PCC/
 │   └── figures/        # 论文图件重绘脚本
 ├── third_party/        # PoinTr 兼容补丁与说明（PoinTr 库本体不入库）
 ├── docs/               # 数据集卡片、结果表、复现对照表
-└── data/  checkpoints/  predictions/  results/   # 发布资产（见“数据与模型获取”）
+├── data/  checkpoints/  predictions/   # 发布资产占位（见“数据与模型获取”）
+└── results/                            # 逐样本结果
 ```
 
 ## 数据与模型获取
 
-- **代码**托管于本仓库（MIT 许可证）。
-- **数据集（约 410 MB）、检查点与导出预测**随 Releases 发布（DOI 待定，接收后注册）。各压缩包附 SHA-256 指纹，可用 `code/datagen/verify_assets.py` 校验。
+- **代码**托管于本仓库（MIT 许可证；数据、发布的权重与第三方条款见 `LICENSES.md`）。
+- **数据集、导出预测与四个主实验检查点**为 GitHub Release `data-v1.0` 的资产，不入 git：`dataset_pc_v2.zip`、`predictions_v1.0.tar.gz`、`masked_main_e179.pt`、`full_region_main_e169.pt`、`pcn_main_e250.pt`、`pointr_main_e250.pt`，校验值见 `SHA256SUMS_data-v1.0.txt`，可用 `sha256sum -c` 核验。划分清单与逐样本指标留在仓库（`data/splits/`、`results/`）。
 - 基准以记录坐标发布（径向已换算为米，垂向保留英尺数值），附沿垂向的仿射映射 z_m = 0.3048 z；体积类结论与该映射无关，距离类结论仅在映射后口径成立（论文 §3.1）。
 - 测试数据与划分清单一并发布，以保证完整可复现。
+
+## 数据位置
+
+解压 `dataset_pc_v2.zip` 至 `$SCC_ROOT/dataset/pc_v2/`：
+
+```
+$SCC_ROOT/dataset/pc_v2/
+├── samples.csv
+├── splits/{train,val,test}.txt
+├── train/{partial,complete,gt_field}/
+├── val/{partial,complete,gt_field}/
+└── test/{partial,complete,gt_field}/
+```
+
+train/val/test 分别为 1200/150/150 对样本；`$SCC_ROOT/validate/` 由评价脚本生成，不随包发布。
 
 ## 快速开始
 
@@ -68,7 +84,7 @@ pip install torch numpy scipy pyyaml
 #    克隆 https://github.com/yuxumin/PoinTr（Apache-2.0），按 third_party/README.md 操作；
 #    适配已并入 code/models/train_pilot.py（训练入口两处解包点）
 
-# 3. 数据：将数据包解至 data/pc_v2/（见 docs/DATASET.md）
+# 3. 数据：解压 dataset_pc_v2.zip 至 $SCC_ROOT/dataset/pc_v2/{train,val,test}
 
 # 4. 训练（单轮全量约 1.5 GPU 小时，RTX 4090）
 python code/models/train_pilot.py --config configs/adapointr_masked.yaml
@@ -106,13 +122,13 @@ python code/stats/common_support_val_main.py     # 主终点（测试集）
   title  = {Paired benchmark and decoupled geometry--volume evaluation protocol for sonar-based salt-cavern point-cloud completion},
   author = {SaltCavern-PCC authors},
   year   = {2026},
-  note   = {Manuscript in preparation; data and code DOI to be registered after acceptance}
+  note   = {Manuscript in preparation; code, data and weights: https://github.com/y694339607/SaltCavern-PCC/releases/tag/data-v1.0}
 }
 ```
 
 ## 许可证
 
-代码：MIT（见 [LICENSE](LICENSE)）。数据集：CC BY 4.0。第三方组件（AdaPoinTr/PoinTr、PCN 重实现、Sansmic）保留各自原许可证，见 [third_party/README.md](third_party/README.md)。
+代码：MIT（见 [LICENSE](LICENSE)）。数据集、导出预测与四个发布检查点：CC BY 4.0。第三方组件（AdaPoinTr/PoinTr、PCN 重实现、Sansmic）保留各自原许可证，见 [third_party/README.md](third_party/README.md) 与 [LICENSES.md](LICENSES.md)。
 
 ## 声明
 

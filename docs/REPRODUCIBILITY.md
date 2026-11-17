@@ -22,11 +22,11 @@
 | Missingness synthesiser · 缺失合成器 | `code/datagen/missing_synth.py` | four mechanisms + angular limit, per-cavity calibration (§3.4, Table 2, Figure 4) |
 | Dataset assembly · 数据集组装/校验 | `code/datagen/build_dataset.py`, `code/evaluation/dataset_precheck.py` | pairing, counts, naming, coordinate range, CD₁ regression, SHA manifest |
 | Coordinate map · 坐标缩放（发布口径） | `code/evaluation/rescale_coordinates.py` | z × 0.3048, float64 per-point check (§3.1) |
-| Asset integrity · 完整性校验 | `code/datagen/verify_assets.py` | SHA-256 verification of archives |
+| Asset integrity · 完整性校验 | `sha256sum -c SHA256SUMS_data-v1.0.txt`; `predictions/SHA256SUMS.txt` | SHA-256 verification of the release assets and of the cloud tree |
 
-LHS sampling is performed during the build; the final 500 TOML configurations and the radius table are
-released with the data (see `docs/DATASET.md`). · LHS 采样在构建阶段执行；最终 500 份 TOML 配置与
-半径表随数据包发布。
+LHS sampling is performed during the build; the TOML configurations and source radius tables are
+build-time inputs and are not part of the release (see `docs/DATASET.md`). · LHS 采样在构建阶段执行；
+TOML 配置与源半径表属生成侧输入，不随发布。
 
 ## 二、Training · 训练 (manuscript §3.5, Figure 5 left)
 
@@ -96,10 +96,10 @@ n = 50 腔时符号检验最小可达 p ≈ 1.8×10⁻¹⁵，仅表示符号一
 | Fig. 3 observation synthesis and mask example (a)(b)(c) · 观测合成与掩码示例 | `code/figures/fig_perturbation_types.py` ((r, z) profiles and the B band) |
 | Fig. 4 four mechanisms and the angular-resolution limit · 四类机制与角分辨率上限 | `fig_missingness_mechanisms.py`; superseded version in `code/figures/_archive/fig_mechanisms_legacy.py` |
 | Fig. 5 masked supervision and dual reference · 掩码监督与双参考 | schematic plus data chain; typeset in the final layout |
-| Fig. 6 the three coverage tiers (a)(b) · 三档保留率 | panels of `fig_volume_distribution.py`; source data `figsrc_*` in the data release |
+| Fig. 6 the three coverage tiers (a)(b) · 三档保留率 | panels of `fig_volume_distribution.py` |
 | Fig. 7 main endpoint over nine configurations · 九配置主终点 | `fig_nine_config_sensitivity_legacy.py` (archived in `code/figures/_archive/`); values in `results/nine_config_summary.csv` |
-| Fig. 8 spatial error and local surface (a)(b) · 空间误差与局部表面 | per-sample npy in the data release (`figsrc_*`); redraw scripts in `code/figures/` |
+| Fig. 8 spatial error and local surface (a)(b) · 空间误差与局部表面 | redraw scripts in `code/figures/`, working from the prediction tree and `results/` |
 | Fig. 9 radial multi-value geometry (a)(b) · 径向多值 | `fig_radial_multivalue.py`, `fig_conditional_differences.py` |
 
-Figure source data (CSV/NPY) ship with the data release, indexed by `figsrc_manifest.csv`.
-· 各图源数据随数据包发布，由 `figsrc_manifest.csv` 索引。
+Figures are regenerated from `predictions/` and `results/` by the scripts in `code/figures/`.
+· 各图由 `code/figures/` 中的脚本从 `predictions/` 与 `results/` 重新生成。

@@ -59,9 +59,14 @@ SaltCavern-PCC/
 
 ## Data and model availability
 
-- **Code** is hosted in this repository (MIT license, see `LICENSES.md` for the data and
-  third-party terms).
-- **Dataset (~410 MB)**, **checkpoints** and **exported predictions** are distributed as the assets of the GitHub Release tagged `data-v1.0` and are not tracked in git. Every archive ships with SHA-256 fingerprints; verify with `code/datagen/verify_assets.py`. Split lists and per-sample metrics are small and stay in the repository (`data/splits/`, `results/`).
+- **Code** is hosted in this repository (MIT licence; `LICENSES.md` covers the data, the released
+  weights and the third-party terms).
+- **Dataset, exported predictions and the four main-run checkpoints** are the assets of the GitHub
+  Release tagged `data-v1.0` and are not tracked in git: `dataset_pc_v2.zip`,
+  `predictions_v1.0.tar.gz`, `masked_main_e179.pt`, `full_region_main_e169.pt`,
+  `pcn_main_e250.pt`, `pointr_main_e250.pt`, with `SHA256SUMS_data-v1.0.txt`. Verify a download
+  with `sha256sum -c SHA256SUMS_data-v1.0.txt`. Split lists and per-sample metrics stay in the
+  repository (`data/splits/`, `results/`).
 - The benchmark is released in the recorded coordinate frame (radial coordinates converted to metres, vertical coordinates retaining foot values), together with the affine map z_m = 0.3048 z along the vertical. Volume-class conclusions are invariant to this map; distance-class conclusions hold only in the post-map frame (see manuscript §3.1).
 - The test split is included for full reproducibility together with the split lists.
 
@@ -89,17 +94,20 @@ Expected tree under `SCC_ROOT`:
 
 ```
 $SCC_ROOT/
-├── dataset/pc_v2/
+├── dataset/pc_v2/                  # unpacked from dataset_pc_v2.zip
 │   ├── samples.csv                 # identical to data/splits/samples.csv in this repo
+│   ├── splits/{train,val,test}.txt
+│   ├── train/{partial,complete,gt_field}/
 │   ├── val/{partial,complete,gt_field}/
 │   └── test/{partial,complete,gt_field}/
-├── validate/
+├── validate/                       # written by the evaluation scripts
 │   ├── volume/{gt,pred_adapointr_masked,pred_adapointr_full,...}/
 │   └── test_predictions/{recovered/{gt,pred_*},metrics}/
-└── supplementary/                  # exported predictions and intermediate artefacts
+└── supplementary/                  # optional, exported predictions and intermediate artefacts
 ```
 
-The data archive on the Releases page unpacks into exactly this tree.
+`dataset_pc_v2.zip` unpacks into `dataset/pc_v2/` (1200 train / 150 val / 150 test samples);
+everything under `validate/` and `supplementary/` is produced locally.
 
 **Full pipeline:**
 
@@ -112,7 +120,7 @@ pip install -r requirements.txt   # torch / numpy / pandas / scipy / matplotlib 
 #    third_party/README.md; the adaptation is already merged into
 #    code/models/train_pilot.py (two unpack points in the training entry)
 
-# 3. data: extract the data archive into data/pc_v2/ (see docs/DATASET.md)
+# 3. data: unpack dataset_pc_v2.zip so that $SCC_ROOT/dataset/pc_v2/{train,val,test} exists
 
 # 4. train (one full run ≈ 1.5 GPU-hours on an RTX 4090)
 python code/models/train_pilot.py --config configs/adapointr_masked.yaml
@@ -157,13 +165,13 @@ per-sample files; paper-formal names:
   title  = {Paired benchmark and decoupled geometry--volume evaluation protocol for sonar-based salt-cavern point-cloud completion},
   author = {SaltCavern-PCC authors},
   year   = {2026},
-  note   = {Manuscript in preparation; data and code DOI to be registered after acceptance}
+  note   = {Manuscript in preparation; code, data and weights: https://github.com/y694339607/SaltCavern-PCC/releases/tag/data-v1.0}
 }
 ```
 
 ## License
 
-Code: MIT (see [LICENSE](LICENSE)). Dataset: CC BY 4.0. Third-party components (AdaPoinTr/PoinTr, PCN reimplementation, Sansmic) retain their original licenses; see [third_party/README.md](third_party/README.md).
+Code: MIT (see [LICENSE](LICENSE)). Dataset, exported predictions and the four released checkpoints: CC BY 4.0. Third-party components (AdaPoinTr/PoinTr, PCN reimplementation, Sansmic) retain their original licences; see [third_party/README.md](third_party/README.md) and [LICENSES.md](LICENSES.md).
 
 ## Disclaimer
 
