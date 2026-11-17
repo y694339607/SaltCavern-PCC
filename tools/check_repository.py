@@ -3,6 +3,7 @@
 
 Checks
   1. every prediction directory used to build `pred_<method>` exists under predictions/
+     (skipped when the release prediction tree has not been unpacked)
   2. every script that builds `pred_<m>` normalises `m` through an ALIAS map
   3. configuration files referenced anywhere exist in configs/
   4. scripts named in markdown exist in code/
@@ -29,7 +30,16 @@ for base, dirs, _ in os.walk(PRED):
         if d.startswith('pred_'):
             present.add(d[5:])
 
-# 1 + 2
+# The prediction clouds are a release asset, not tracked in git: a fresh clone has
+# predictions/ holding only MANIFEST.csv and SHA256SUMS.txt. Check directory presence
+# only when the tree has been unpacked (all-or-nothing; a partial tree is an error).
+unpacked = bool(present)
+if unpacked:
+    unknown = {a for a in METHODS if not os.path.isdir(os.path.join(PRED, 'test', 'pred_' + a))}
+    if unknown:
+        issues.append('prediction directories missing under predictions/test: %s' % sorted(unknown))
+
+# 2
 for f in glob.glob(os.path.join(ROOT, 'code', '**', '*.py'), recursive=True):
     t = io.open(f, encoding='utf-8', errors='replace').read()
     if 'f"pred_{m}' in t or "f'pred_{m}" in t:
@@ -39,9 +49,6 @@ for f in glob.glob(os.path.join(ROOT, 'code', '**', '*.py'), recursive=True):
         toks = set(re.findall(r'"([^"]+)"', m.group(1)))
         if not toks <= LEGACY:
             issues.append('%s: unexpected METHODS tokens %s' % (os.path.relpath(f, ROOT), sorted(toks)))
-        unknown = {a for a in METHODS if not os.path.isdir(os.path.join(PRED, 'test', 'pred_' + a))}
-        if unknown:
-            issues.append('prediction directories missing under predictions/test: %s' % sorted(unknown))
 
 # 3
 cfgs = set(os.listdir(os.path.join(ROOT, 'configs')))
@@ -68,7 +75,10 @@ for f in glob.glob(os.path.join(ROOT, 'code', '**', '*.py'), recursive=True):
     except SyntaxError as e:
         bad.append('%s:%s' % (os.path.relpath(f, ROOT), e.lineno))
 
-print('prediction directories: %s' % sorted(present))
+if unpacked:
+    print('prediction directories: %s' % sorted(present))
+else:
+    print('prediction directories: not unpacked (release asset); directory check skipped')
 if bad:
     print('syntax errors: %s' % bad)
 for i in sorted(set(issues)):
